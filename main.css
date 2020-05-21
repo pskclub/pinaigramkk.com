@@ -1,0 +1,53 @@
+.tanai {
+    background: url(https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Ybp6MExJSnbEge82HV7jmfqGes.jpg) no-repeat center center !important;
+    background-size: cover !important;
+}
+
+.navbar {
+    height: 74px;
+    background: url(https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1YZMA69ghJILgMK8eljFhPNOFIi.jpg) no-repeat center center !important;
+    background-size: cover !important;
+
+}
+
+.text-info {
+    color: #0771FF !important;
+}
+
+.bg-section {
+    background: transparent radial-gradient(closest-side at 52% 100%, #F6F6F6 0%, #EDEDED 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box !important;
+}
+
+.nav-text .nav-link {
+    color: #4A4A4A !important;
+    font-weight: bold !important;
+}
+
+.nav-text .nav-link.active {
+    color: #0771FF !important;
+}
+
+.product-list {
+    color: #4A4A4A !important;
+}
+
+.product-list li {
+    margin-bottom: 10px !important;
+    font-size: 16px !important;
+}
+
+.btn-blue {
+    background: transparent linear-gradient(180deg, #028FD2 0%, #0353D2 100%) 0% 0% no-repeat padding-box !important;
+    border-radius: 2px !important;
+    color: #FFFFFF !important;
+    border-color: #028FD2 !important;
+    width: 200px !important;
+}
+
+.btn-white {
+    color: #4A4A4A !important;
+    background: #FFFFFF 0% 0% no-repeat padding-box !important;
+    border: 1px solid #979797 !important;
+    border-radius: 2px !important;
+    width: 200px !important;
+}
