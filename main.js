@@ -1,5 +1,5 @@
 Vue.component('header-section', {
-  template: `
+    template: `
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <a class="navbar-brand" href="#"><img
@@ -29,7 +29,7 @@ Vue.component('header-section', {
 })
 
 Vue.component('navbar-section', {
-  template: `
+    template: `
   <div class="bg-white">
     <ul class="nav container nav-text">
       <li class="nav-item">
@@ -59,7 +59,7 @@ Vue.component('navbar-section', {
 })
 
 Vue.component('slide-show-section', {
-  template: `  <div class="carousel slide" data-ride="carousel" id="carouselExampleIndicators">
+    template: `  <div class="carousel slide" data-ride="carousel" id="carouselExampleIndicators">
     <ol class="carousel-indicators">
       <li class="active" data-slide-to="0" data-target="#carouselExampleIndicators"></li>
       <li data-slide-to="1" data-target="#carouselExampleIndicators"></li>
@@ -115,7 +115,7 @@ Vue.component('slide-show-section', {
 })
 
 Vue.component('customer-section', {
-  template: `
+    template: `
   <div class="bg-section" id="customer">
     <div class="container py-5 ">
       <h1 class="text-info mb-5">ลูกค้าของเรา</h1>
@@ -165,7 +165,7 @@ Vue.component('customer-section', {
 })
 
 Vue.component('howto-section', {
-  template: `
+    template: `
    <div class="container py-5" id="howto">
     <h1 class="text-info text-center mb-5">ขั้นตอนการสมัคร</h1>
     <div class="d-flex text-center flex-column ">
@@ -241,7 +241,7 @@ Vue.component('howto-section', {
 })
 
 Vue.component('tanai-section', {
-  template: `
+    template: `
 <div class="tanai" id="tanai">
   <div class="container py-5">
     <h1 class="text-info mb-5">ทีมทนายผู้มีประสบการณ์</h1>
@@ -259,14 +259,27 @@ Vue.component('tanai-section', {
 })
 
 Vue.component('register-section', {
-  template: `
+    data: function () {
+        return {
+            step: 0,
+            type: 0
+        }
+    },
+    methods: {
+        setStep(step, type) {
+            this.step = step
+            this.type = type
+        }
+    },
+    template: `
 <div class="container py-5" id="register">
   <h1 class="text-info text-center">สมัครวันนี้ฟรีสัมนา</h1>
   <div class="text-center mt-5" style="color:#525553;">
     <p class="mb-0" style="font-size: 24px"><b>ในวันที่ 25 กุมภาพันธ์ 2563</b></p>
     <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
   </div>
-  <div class="row equal p-5">
+  <register-step-1 @reset="setStep(0 ,0)" v-if="step === 1"></register-step-1>
+  <div v-else class="row equal p-5">
     <div class="col-md-4 ">
       <div class="card h-100">
         <div class="card-body d-flex  flex-column">
@@ -287,7 +300,7 @@ Vue.component('register-section', {
           <div class="text-center d-flex justify-content-end flex-column" style="flex:1">
             <p class="font-weight-bold" style="font-size: 45px;color: #0771FF">7,000 บาท</p>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-blue btn-block">สมัคร</button>
+              <button @click="setStep(1, 1)" class="btn btn-blue btn-block">สมัคร</button>
             </div>
           </div>
         </div>
@@ -360,7 +373,7 @@ Vue.component('register-section', {
 })
 
 Vue.component('kkgroup-section', {
-  template: `
+    template: `
     <div class="bg-section" id="kkgroup">
     <div class="container py-5 ">
       <h1 class="text-info mb-5">KK Group</h1>
@@ -412,7 +425,7 @@ Vue.component('kkgroup-section', {
 })
 
 Vue.component('safe-section', {
-  template: `
+    template: `
     <div id="safe">
     <div class="container py-5 ">
       <h1 class="text-info mb-5">ตู้เซฟนิรภัยป้องกันอัคคีภัย</h1>
@@ -442,7 +455,7 @@ Vue.component('safe-section', {
 })
 
 Vue.component('map-section', {
-  template: `
+    template: `
   <div class="py-5 bg-white">
     <h1 class="text-info text-center mb-5">แผนที่เดินทางมา KK CITY</h1>
     <div>
@@ -477,7 +490,7 @@ Vue.component('map-section', {
 })
 
 Vue.component('footer-section', {
-  template: `
+    template: `
    <div class="text-center py-3" style="background-color: #4A4A4A;color: white;font-size: 14px">
     <p class="m-0">
       Copyright © 2020 KKGRP | All Rights Reserved
@@ -488,9 +501,9 @@ Vue.component('footer-section', {
 })
 
 var app = new Vue({
-  el: '#main',
-  data: {
-    message: 'Hello Vue!',
-    isShow: true
-  }
+    el: '#main',
+    data: {
+        message: 'Hello Vue!',
+        isShow: true
+    }
 })
