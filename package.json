@@ -1,0 +1,13 @@
+{
+  "name": "pinaigramkk.com",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "PskCluB <passakon_p@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "browser-sync": "^2.26.7"
+  },
+  "scripts": {
+    "dev" : "browser-sync start --server --files \"*.css,*.js,*.html\""
+  }
+}
