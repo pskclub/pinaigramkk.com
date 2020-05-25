@@ -7,14 +7,17 @@ Vue.component('login-form', {
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit (data) {
       this.$refs.form.validate().then(success => {
-        console.log('555', success)
         if (!success) {
           return
         }
 
-        alert('Form has been submitted!')
+        login(this.email, this.password).then((res) => {
+          setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
+          alert('login success')
+          window.location.replace('/')
+        })
       })
     }
   },
@@ -23,7 +26,7 @@ Vue.component('login-form', {
     <div class="col-md-6">
       <form @submit.prevent="onSubmit">
          <text-input v-model="email" name="Email" rules="required" />
-         <text-input v-model="password" name="Password" rules="required" />
+         <text-input type="password" v-model="password" name="Password" rules="required" />
         <button type="submit" class="btn btn-primary" :disabled="invalid">Login</button>
       </form>
     </div>
