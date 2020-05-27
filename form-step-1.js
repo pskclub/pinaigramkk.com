@@ -183,7 +183,7 @@ Vue.component('register-step-1', {
             </div>
             <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์" rules="required" v-model="zipcode"/>
             <div class="row justify-content-center">
-                <div class="d-flex justify-content-center my-3">
+                <div class="d-flex justify-content-center my-4">
                   <button class="btn btn-blue btn-block">สมัคร</button>
                 </div>
             </div>
