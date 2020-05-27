@@ -19,5 +19,11 @@ function login (username, password) {
     username: username,
     password: password
   }, apiOptions())
+}
 
+
+function register (email) {
+  return NewRequester.post(`/member/email`, {
+    email: email,
+  }, apiOptions())
 }

@@ -88,11 +88,9 @@ Vue.component('register-step-1', {
         </div>
       </div>
     </div>
-    <div class="row px-5 py-4">
-      <div class="col text-center">
-        <span class="text-danger" style="font-weight: bold">*</span> <span style="color: #0771FF; font-weight: bold">ผู้สมัครทำพินัยกรรม ต้องมีอายุไม่ต่ำกว่า 15ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ และต้องไม่เป็นบุคคลไร้ความสามารถ</span>
-      </div>
-    </div>
+    <p class="px-5 py-4 text-center">
+      <span class="text-danger" style="font-weight: bold">*</span> <span style="color: #0771FF; font-weight: bold">ผู้สมัครทำพินัยกรรม ต้องมีอายุไม่ต่ำกว่า 15ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ และต้องไม่เป็นบุคคลไร้ความสามารถ</span>
+    </p>
     <div class="row px-5 py-4 justify-content-center">
       <div class="col-9">
         <div class="row form-group">
@@ -111,6 +109,10 @@ Vue.component('register-step-1', {
             <input type="text" class="form-control" placeholder="อื่นๆ">
           </div>
         </div>
+        <text-input v-model="email" name="Email" rules="required" />
+        <text-input v-model="email" name="Email" rules="required" />
+        <text-input v-model="email" name="Email" rules="required" />
+
       </div>
     </div>
   </div>

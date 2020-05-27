@@ -19,6 +19,10 @@ Vue.component('text-input', {
     vid: {
       type: String,
       default: undefined
+    },
+    isColumn: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -26,16 +30,17 @@ Vue.component('text-input', {
   }),
   watch: {
     currentValue (val) {
-      // allows us to use v-model on our input.
-      this.$emit('input', val);
+      this.$emit('input', val)
     }
   },
   template: `<ValidationProvider :name="name" :vid="vid" rules="required" v-slot="{ errors }">
-  <div class="form-group">
-    <label>{{name}}</label>
-    <input :type="type" v-model="currentValue" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
-    <div class="invalid-feedback">
-      {{ errors[0] }}
+  <div :class="{'form-group': true,'row' : !isColumn}">
+    <label :class="{'col-sm-2 col-form-label text-right': !isColumn}">{{name}}</label>
+    <div :class="{'col-sm-10': !isColumn}">
+      <input :type="type" v-model="currentValue" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
+      <div class="invalid-feedback">
+        {{ errors[0] }}
+      </div>
     </div>
   </div>
 </ValidationProvider>
