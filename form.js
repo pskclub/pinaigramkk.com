@@ -84,18 +84,19 @@ Vue.component('text-input-optional', {
         }
     },
     template: `<ValidationProvider :name="name" rules="required" v-slot="{ errors }">
-    <div class="row form-group">
-        <div class="col-3 d-flex align-items-center justify-content-end">
-                        <span class="text-danger" style="font-weight: bold">*</span> <span
-                            style="font-weight: bold; font-size: 14px">{{name}}:</span>
-        </div>
-        <div :class="['d-flex align-items-center justify-content-start', className]">
-            <input v-model="currentValue" :type="type" :class="{ 'form-control' :true, 'is-invalid': errors[0]}" :placeholder="placeholder">
-        </div>
-        <div class="invalid-feedback">
-            {{ errors[0] }}
-        </div>
+  <div class="row form-group">
+    <div class="col-3 d-flex align-items-center justify-content-end">
+      <span class="text-danger" style="font-weight: bold">*</span> <span
+      style="font-weight: bold; font-size: 14px">{{name}}:</span>
     </div>
+    <div :class="['d-flex align-items-center justify-content-start', className]">
+      <input v-model="currentValue" :type="type" :class="{ 'form-control' :true, 'is-invalid': errors[0]}"
+             :placeholder="placeholder">
+    </div>
+    <div class="invalid-feedback">
+      {{ errors[0] }}
+    </div>
+  </div>
 </ValidationProvider>
   `
 })

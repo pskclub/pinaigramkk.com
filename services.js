@@ -1,7 +1,5 @@
 let BASE_API = 'https://stg-ecom.pams.ai/api'
 
-
-
 function apiOptions () {
   return {
     baseURL: BASE_API,
@@ -21,9 +19,8 @@ function login (username, password) {
   }, apiOptions())
 }
 
-
 function register (email) {
   return NewRequester.post(`/member/email`, {
-    email: email,
+    email: email
   }, apiOptions())
 }
