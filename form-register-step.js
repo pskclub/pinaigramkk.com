@@ -1,4 +1,10 @@
 Vue.component('form-step-bar', {
+  props: {
+    step: {
+      type: Number,
+      default: 1
+    }
+  },
   template: `
        <div class="row px-5 py-4">
       <div class="col d-flex align-items-center position-relative px-0">
