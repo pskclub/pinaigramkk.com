@@ -262,23 +262,35 @@ Vue.component('register-section', {
   data: function () {
     return {
       step: 0,
-      type: 0,
+      isAuth: false,
     }
   },
   methods: {
-    setStep (step, type) {
+    setStep (step) {
       this.step = step
       this.type = type
     }
   },
-  template: `
-<div class="container py-5" id="register">
+  created: function () {
+    this.isAuth = isAuth()
+  },
+  template: `<div class="container py-5" id="register">
   <h1 class="text-info text-center">สมัครวันนี้ฟรีสัมนา</h1>
   <div class="text-center mt-5" style="color:#525553;">
     <p class="mb-0" style="font-size: 24px"><b>ในวันที่ 25 กุมภาพันธ์ 2563</b></p>
     <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
   </div>
-  <register-step-1 @reset="setStep(0 ,0)" v-if="step === 1"></register-step-1>
+  <div v-if="step > 0">
+    <login-form v-if="!isAuth"></login-form>
+    <div v-else>
+      <register-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 1"></register-step>
+      <payment-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 2"></payment-step>
+      <detail-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 3"></detail-step>
+      <address-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 4"></address-step>
+      <complete-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 5"></complete-step>
+    </div>
+
+  </div>
   <div v-else class="row equal p-5">
     <div class="col-md-4 ">
       <div class="card h-100">
@@ -300,7 +312,7 @@ Vue.component('register-section', {
           <div class="text-center d-flex justify-content-end flex-column" style="flex:1">
             <p class="font-weight-bold" style="font-size: 45px;color: #0771FF">7,000 บาท</p>
             <div class="d-flex justify-content-center">
-              <button @click="setStep(1, 1)" class="btn btn-blue btn-block">สมัคร</button>
+              <button @click="setStep(1)" class="btn btn-blue btn-block">สมัคร</button>
             </div>
           </div>
         </div>

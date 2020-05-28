@@ -1,50 +1,6 @@
-Vue.component('register-step-1', {
-    data: function () {
-        return {
-            isAuth: false,
-            firstName: '',
-            lastName: '',
-            telephone: '',
-            email: '',
-            personID: '',
-            address: '',
-            province: '',
-            district: '',
-            subDistrict: '',
-            zipcode: '',
-        }
-    },
-    created: function () {
-        this.isAuth = isAuth()
-    },
-    template: `<div>
-  <login-form v-if="!isAuth"></login-form>
-  <div v-else>
-    <div class="row justify-content-center p-4">
-      <div class="col-auto">
-        <img style="height: 100px"
-             src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Yc6LIpv5eSeQcMnWVpHOGghgvp.jpg">
-      </div>
-      <div class="col-6">
-        <div>
-          <h2>Easy Will</h2>
-        </div>
-        <div class="pl-4">
-          <ul class="p-0" style="font-size: 20px; color:#525553;">
-            <li>ร่างพินัยกรรมโดยกำหนดสัดส่วนการรับมรดก และส่งให้ถึงมือคุณ</li>
-            <li>มีผลถูกต้องใช้บังคับได้ตามกฏหมาย</li>
-          </ul>
-        </div>
-        <div class="pl-4">
-          <h2 style="color: #0771FF;">7,000 บาท</h2>
-        </div>
-      </div>
-      <div class="col-auto">
-        <a href="#" @click.prevent="$emit('reset')">ดูแพ็คเกจอื่น</a>
-      </div>
-    </div>
-    <hr>
-    <div class="row px-5 py-4">
+Vue.component('form-step-bar', {
+  template: `
+       <div class="row px-5 py-4">
       <div class="col d-flex align-items-center position-relative px-0">
         <div class="step-circle text-center p-1 d-flex flex-column justify-content-center"
              style="height: 60px;width: 60px; border-radius: 50%; background-color: #f6dc1a; z-index: 1">
@@ -98,6 +54,50 @@ Vue.component('register-step-1', {
         </div>
       </div>
     </div>
+    `
+})
+
+Vue.component('register-step', {
+  data: function () {
+    return {
+      firstName: '',
+      lastName: '',
+      telephone: '',
+      email: '',
+      personID: '',
+      address: '',
+      province: '',
+      district: '',
+      subDistrict: '',
+      zipcode: ''
+    }
+  },
+  template: `<div>
+<div class="row justify-content-center p-4">
+      <div class="col-auto">
+        <img style="height: 100px"
+             src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Yc6LIpv5eSeQcMnWVpHOGghgvp.jpg">
+      </div>
+      <div class="col-6">
+        <div>
+          <h2>Easy Will</h2>
+        </div>
+        <div class="pl-4">
+          <ul class="p-0" style="font-size: 20px; color:#525553;">
+            <li>ร่างพินัยกรรมโดยกำหนดสัดส่วนการรับมรดก และส่งให้ถึงมือคุณ</li>
+            <li>มีผลถูกต้องใช้บังคับได้ตามกฏหมาย</li>
+          </ul>
+        </div>
+        <div class="pl-4">
+          <h2 style="color: #0771FF;">7,000 บาท</h2>
+        </div>
+      </div>
+      <div class="col-auto">
+        <a href="#" @click.prevent="$emit('reset')">ดูแพ็คเกจอื่น</a>
+      </div>
+    </div>
+    <hr>
+  <form-step-bar></form-step-bar>
     <div class="row px-5 py-4">
       <div class="col text-center">
         <span class="text-danger" style="font-weight: bold">*</span> <span
@@ -194,12 +194,11 @@ Vue.component('register-step-1', {
                              rules="required" v-model="zipcode"/>
         <div class="row justify-content-center">
           <div class="d-flex justify-content-center my-4">
-            <button class="btn btn-blue btn-block">สมัคร</button>
+            <button class="btn btn-blue btn-block"  type="button" @click="$emit('changeStep',2)">สมัคร</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </div>
 `
 })
