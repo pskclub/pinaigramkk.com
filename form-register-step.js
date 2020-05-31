@@ -5,55 +5,63 @@ Vue.component('form-step-bar', {
       default: 1
     }
   },
+  methods: {
+    getStepStyle: function (step) {
+      return `height: 60px;width: 60px; border-radius: 50%; background-color: ${this.step >= step ? '#f6dc1a' : '#9a9a9b'}; z-index: 1;`
+    },
+    getStepDetailStyle: function (step) {
+      return `background-color: ${this.step >= step ? '#f9ea7d' : 'rgb(214, 214, 215)'}; width: 95%; height: 65%;position: absolute; right: -5%; padding-left: 7%`
+    }
+  },
   template: `
        <div class="row px-5 py-4">
       <div class="col d-flex align-items-center position-relative px-0">
         <div class="step-circle text-center p-1 d-flex flex-column justify-content-center"
-             style="height: 60px;width: 60px; border-radius: 50%; background-color: #f6dc1a; z-index: 1">
+             :style="getStepStyle(1)">
           <h6 style="line-height: 1">Step</h6>
           <h3 style="font-weight: bolder; line-height: 0.5">1</h3>
         </div>
         <div class="step-detail flex-grow-1 d-flex align-items-center justify-  content-center"
-             style="background-color: #f9ea7d; width: 95%; height: 65%;position: absolute; right: -5%; padding-left: 7%">
+             :style="getStepDetailStyle(1)">
           <div class="w-100 px-4 pb-1 text-center" style="overflow-wrap: break-word">
             <span style="font-weight: bolder; font-size: 12px">กรอกข้อมูลผู้สมัคร</span>
           </div>
         </div>
       </div>
-      <div class="col d-flex align-items-center position-relative px-0 text-white">
+      <div class="col d-flex align-items-center position-relative px-0">
         <div class="step-circle text-center p-1 d-flex flex-column justify-content-center"
-             style="height: 60px;width: 60px; border-radius: 50%; background-color: #9a9a9b; z-index: 1">
+             :style="getStepStyle(2)">
           <h6 style="line-height: 1">Step</h6>
           <h3 style="font-weight: bolder; line-height: 0.5">2</h3>
         </div>
         <div class="step-detail flex-grow-1 d-flex align-items-center justify-content-center"
-             style="background-color: #d6d6d7; width: 95%; height: 65%;position: absolute; right: -5%; padding-left: 7%">
+             :style="getStepDetailStyle(2)">
           <div class="w-100 px-4 pb-1 text-center" style="overflow-wrap: break-word">
             <span style="font-weight: bolder; font-size: 12px">ชำระเงิน</span>
           </div>
         </div>
       </div>
-      <div class="col d-flex align-items-center position-relative px-0 text-white">
+      <div class="col d-flex align-items-center position-relative px-0">
         <div class="step-circle text-center p-1 d-flex flex-column justify-content-center"
-             style="height: 60px;width: 60px; border-radius: 50%; background-color: #9a9a9b; z-index: 1">
+               :style="getStepStyle(3)">
           <h6 style="line-height: 1">Step</h6>
           <h3 style="font-weight: bolder; line-height: 0.5">3</h3>
         </div>
         <div class="step-detail flex-grow-1 d-flex align-items-center justify-content-center"
-             style="background-color: #d6d6d7; width: 95%; height: 65%;position: absolute; right: -5%; padding-left: 7%">
+             :style="getStepDetailStyle(3)">
           <div class="w-100 px-4 pb-1 text-center" style="overflow-wrap: break-word">
             <span style="font-weight: bolder; font-size: 12px">กรอกรายละเอียดเพิ่มเติม</span>
           </div>
         </div>
       </div>
-      <div class="col d-flex align-items-center position-relative px-0 text-white">
+      <div class="col d-flex align-items-center position-relative px-0">
         <div class="step-circle text-center p-1 d-flex flex-column justify-content-center"
-             style="height: 60px;width: 60px; border-radius: 50%; background-color: #9a9a9b; z-index: 1">
+               :style="getStepStyle(4)">
           <h6 style="line-height: 1">Step</h6>
           <h3 style="font-weight: bolder; line-height: 0.5">4</h3>
         </div>
         <div class="step-detail flex-grow-1 d-flex align-items-center justify-content-center"
-             style="background-color: #d6d6d7; width: 95%; height: 65%;position: absolute; right: -5%; padding-left: 7%">
+              :style="getStepDetailStyle(4)">
           <div class="w-100 px-4 pb-1 text-center" style="overflow-wrap: break-word">
             <span style="font-weight: bolder; font-size: 12px">กรอกที่อยู่สำหรับจัดส่งเอกสาร</span>
           </div>

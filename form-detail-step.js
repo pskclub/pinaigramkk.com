@@ -1,6 +1,6 @@
 Vue.component('detail-step', {
   template: `<div>
-  <form-step-bar></form-step-bar>
+  <form-step-bar :step="3"></form-step-bar>
   <h1>detail step</h1>
   <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
   <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"/>

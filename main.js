@@ -268,7 +268,6 @@ Vue.component('register-section', {
   methods: {
     setStep (step) {
       this.step = step
-      this.type = type
     }
   },
   created: function () {
