@@ -10,7 +10,7 @@ Vue.component('form-step-bar', {
       return `height: 60px;width: 60px; border-radius: 50%; background-color: ${this.step >= step ? '#f6dc1a' : '#9a9a9b'}; z-index: 1;`
     },
     getStepDetailStyle: function (step) {
-      return `background-color: ${this.step >= step ? '#f9ea7d' : 'rgb(214, 214, 215)'}; width: 95%; height: 65%;position: absolute; right: -5%; padding-left: 7%`
+      return `background-color: ${this.step >= step ? '#f9ea7d' : 'rgb(214, 214, 215)'}; width: 95%; height: 65%;position: absolute; right: -5%; padding-left: 7%;border-bottom-right-radius: 20px;border-top-right-radius: 20px;`
     }
   },
   template: `
