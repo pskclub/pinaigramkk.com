@@ -1,3 +1,78 @@
+Vue.component('start-name-input', {
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    vid: {
+      type: String,
+      default: undefined
+    }
+  },
+  data: () => ({
+    currentValue: ''
+  }),
+  watch: {
+    currentValue (val) {
+      // allows us to use v-model on our input.
+      this.$emit('input', val)
+    }
+  },
+  methods: {
+    onSelect (val) {
+      this.currentValue = val
+    },
+    isElse () {
+      return this.currentValue !== 'นาย' && this.currentValue !== 'นาง' && this.currentValue !== 'นางสาว'
+    }
+  },
+  template: `<ValidationProvider :name="name" rules="required" v-slot="{ errors }">
+  <div class="row form-group">
+    <div class="col-3 d-flex align-items-center justify-content-end">
+      <span class="text-danger" style="font-weight: bold">*</span> <span
+      style="font-weight: bold">คำนำหน้าชื่อ:</span>
+    </div>
+    <div class="col-9 d-flex align-items-center justify-content-start">
+      <div class="form-check mr-1"  @click="onSelect('นาย')">
+        <input class="form-check-input" :name="name" :checked="currentValue === 'นาย'" type="radio">
+        <label class="form-check-label" >นาย</label>
+      </div>
+      <div class="form-check mr-1" @click="onSelect('นาง')">
+        <input class="form-check-input" :name="name" :checked="currentValue === 'นาง'"  type="radio" value="nang">
+        <label class="form-check-label" >นาง</label>
+      </div>
+      <div class="form-check mr-1" @click="onSelect('นางสาว')">
+        <input class="form-check-input" :name="name" :checked="currentValue === 'นางสาว'"  type="radio" value="nangsao">
+        <label class="form-check-label" >นางสาว</label>
+      </div>
+      <div class="form-check mr-2" @click="onSelect('')">
+        <input class="form-check-input" type="radio" value="other" :checked="isElse()">
+        <label class="form-check-label">อื่นๆ</label>
+      </div>
+      <div v-if="isElse()">
+        <input type="text" v-model="currentValue" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
+      </div>
+      <div class="invalid-feedback">
+        {{ errors[0] }}
+      </div>
+    </div>
+  </div>
+</ValidationProvider>
+  `
+})
+
 Vue.component('form-step-bar', {
   props: {
     step: {
@@ -74,6 +149,7 @@ Vue.component('form-step-bar', {
 Vue.component('register-step', {
   data: function () {
     return {
+      start_name: '',
       firstName: '',
       lastName: '',
       telephone: '',
@@ -87,132 +163,97 @@ Vue.component('register-step', {
     }
   },
   template: `<div>
-<div class="row justify-content-center p-4">
-      <div class="col-auto">
-        <img style="height: 100px"
-             src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Yc6LIpv5eSeQcMnWVpHOGghgvp.jpg">
+  <div class="row justify-content-center p-4">
+    <div class="col-auto">
+      <img style="height: 100px"
+           src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Yc6LIpv5eSeQcMnWVpHOGghgvp.jpg">
+    </div>
+    <div class="col-6">
+      <div>
+        <h2>Easy Will</h2>
       </div>
-      <div class="col-6">
-        <div>
-          <h2>Easy Will</h2>
-        </div>
-        <div class="pl-4">
-          <ul class="p-0" style="font-size: 20px; color:#525553;">
-            <li>ร่างพินัยกรรมโดยกำหนดสัดส่วนการรับมรดก และส่งให้ถึงมือคุณ</li>
-            <li>มีผลถูกต้องใช้บังคับได้ตามกฏหมาย</li>
-          </ul>
-        </div>
-        <div class="pl-4">
-          <h2 style="color: #0771FF;">7,000 บาท</h2>
-        </div>
+      <div class="pl-4">
+        <ul class="p-0" style="font-size: 20px; color:#525553;">
+          <li>ร่างพินัยกรรมโดยกำหนดสัดส่วนการรับมรดก และส่งให้ถึงมือคุณ</li>
+          <li>มีผลถูกต้องใช้บังคับได้ตามกฏหมาย</li>
+        </ul>
       </div>
-      <div class="col-auto">
-        <a href="#" @click.prevent="$emit('reset')">ดูแพ็คเกจอื่น</a>
+      <div class="pl-4">
+        <h2 style="color: #0771FF;">7,000 บาท</h2>
       </div>
     </div>
-    <hr>
+    <div class="col-auto">
+      <a href="#" @click.prevent="$emit('reset')">ดูแพ็คเกจอื่น</a>
+    </div>
+  </div>
+  <hr>
   <form-step-bar></form-step-bar>
-    <div class="row px-5 py-4">
-      <div class="col text-center">
-        <span class="text-danger" style="font-weight: bold">*</span> <span
-        style="color: #0771FF; font-weight: bold">ผู้สมัครทำพินัยกรรม ต้องมีอายุไม่ต่ำกว่า 15ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ และต้องไม่เป็นบุคคลไร้ความสามารถ</span>
-      </div>
+  <div class="row px-5 py-4">
+    <div class="col text-center">
+      <span class="text-danger" style="font-weight: bold">*</span> <span
+      style="color: #0771FF; font-weight: bold">ผู้สมัครทำพินัยกรรม ต้องมีอายุไม่ต่ำกว่า 15ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ และต้องไม่เป็นบุคคลไร้ความสามารถ</span>
     </div>
-    <div class="row px-5 py-4 justify-content-center">
-      <div class="col-10">
-        <div class="row form-group">
-          <div class="col-3 d-flex align-items-center justify-content-end">
-            <span class="text-danger" style="font-weight: bold">*</span> <span
-            style="font-weight: bold">คำนำหน้าชื่อ:</span>
-          </div>
-          <div class="col-9 d-flex align-items-center justify-content-start">
-            <div class="form-check mr-1">
-              <input class="form-check-input" checked type="radio" name="title" id="nay" value="nay">
-              <label class="form-check-label" for="nay">นาย</label>
-            </div>
-            <div class="form-check mr-1">
-              <input class="form-check-input" type="radio" name="title" id="nang" value="nang">
-              <label class="form-check-label" for="nang">นาง</label>
-            </div>
-            <div class="form-check mr-1">
-              <input class="form-check-input" type="radio" name="title" id="nangsao" value="nangsao">
-              <label class="form-check-label" for="nangsao">นางสาว</label>
-            </div>
-            <div class="form-check mr-2">
-              <input class="form-check-input" type="radio" name="title" id="other" value="other">
-              <label class="form-check-label" for="other">อื่นๆ</label>
-            </div>
-            <input type="text" class="form-control">
-          </div>
+  </div>
+  <div class="row px-5 py-4 justify-content-center">
+    <div class="col-10">
+      <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="start_name"/>
+      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
+      <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"
+                           v-model="lastName"/>
+      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="email"/>
+      <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
+                           v-model="telephone"/>
+      <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
+                           rules="required" v-model="personID"/>
+      <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
+                       rules="required" v-model="address"/>
+      <div class="row form-group">
+        <div class="col-3 d-flex align-items-center justify-content-end">
+          <span class="text-danger" style="font-weight: bold">*</span> <span
+          style="font-weight: bold; font-size: 14px">จังหวัด:</span>
         </div>
-        <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
-        <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"
-                             v-model="lastName"/>
-        <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="email"/>
-        <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
-                             v-model="telephone"/>
-        <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                             rules="required" v-model="personID"/>
-        <div class="row form-group">
-          <div class="col-3 d-flex flex-column align-items-end">
-            <div>
-              <span class="text-danger" style="font-weight: bold">*</span> <span
-              style="font-weight: bold; font-size: 14px">ที่อยู่:</span>
-            </div>
-            <span class="text-muted" style="font-size: 14px">(ตามที่ปรากฏในบัตรประชาชน)</span>
-          </div>
-          <div class="col-9 d-flex align-items-center justify-content-start">
-                        <textarea class="form-control" placeholder="กรอกที่อยู่">
-                        </textarea>
-          </div>
+        <div class="col-7 d-flex align-items-center justify-content-start">
+          <select class="form-control">
+            <option>กรุณาเลือกจังหวัด</option>
+            <option>Bangkok</option>
+          </select>
         </div>
-        <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                             rules="required" v-model="email"/>
-        <div class="row form-group">
-          <div class="col-3 d-flex align-items-center justify-content-end">
-            <span class="text-danger" style="font-weight: bold">*</span> <span
-            style="font-weight: bold; font-size: 14px">จังหวัด:</span>
-          </div>
-          <div class="col-7 d-flex align-items-center justify-content-start">
-            <select class="form-control">
-              <option>กรุณาเลือกจังหวัด</option>
-              <option>Bangkok</option>
-            </select>
-          </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-3 d-flex align-items-center justify-content-end">
+          <span class="text-danger" style="font-weight: bold">*</span> <span
+          style="font-weight: bold; font-size: 14px">อำเภอ/เขต:</span>
         </div>
-        <div class="row form-group">
-          <div class="col-3 d-flex align-items-center justify-content-end">
-            <span class="text-danger" style="font-weight: bold">*</span> <span
-            style="font-weight: bold; font-size: 14px">อำเภอ/เขต:</span>
-          </div>
-          <div class="col-7 d-flex align-items-center justify-content-start">
-            <select class="form-control">
-              <option>กรุณาเลือกอำเภอ/เขต</option>
-              <option>Bangkok</option>
-            </select>
-          </div>
+        <div class="col-7 d-flex align-items-center justify-content-start">
+          <select class="form-control">
+            <option>กรุณาเลือกอำเภอ/เขต</option>
+            <option>Bangkok</option>
+          </select>
         </div>
-        <div class="row form-group">
-          <div class="col-3 d-flex align-items-center justify-content-end">
-            <span class="text-danger" style="font-weight: bold">*</span> <span
-            style="font-weight: bold; font-size: 14px">ตำบล/แขวง:</span>
-          </div>
-          <div class="col-7 d-flex align-items-center justify-content-start">
-            <select class="form-control">
-              <option>กรุณาเลือกตำบล/แขวง</option>
-              <option>หัวหิน</option>
-            </select>
-          </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-3 d-flex align-items-center justify-content-end">
+          <span class="text-danger" style="font-weight: bold">*</span> <span
+          style="font-weight: bold; font-size: 14px">ตำบล/แขวง:</span>
         </div>
-        <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
-                             rules="required" v-model="zipcode"/>
-        <div class="row justify-content-center">
-          <div class="d-flex justify-content-center my-4">
-            <button class="btn btn-blue btn-block"  type="button" @click="$emit('changeStep',2)">สมัคร</button>
-          </div>
+        <div class="col-7 d-flex align-items-center justify-content-start">
+          <select class="form-control">
+            <option>กรุณาเลือกตำบล/แขวง</option>
+            <option>หัวหิน</option>
+          </select>
+        </div>
+      </div>
+      <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
+                           rules="required" v-model="zipcode"/>
+      <div class="row justify-content-center">
+        <div class="d-flex justify-content-center my-4">
+          <button class="btn btn-blue btn-block" type="button" @click="$emit('changeStep',2)">สมัคร</button>
         </div>
       </div>
     </div>
+  </div>
 </div>
 `
 })
+
+
