@@ -13,26 +13,18 @@ Vue.component('detail-step', {
   </div>
   <div class="row justify-content-center">
     <div class="col-10">
+      <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="start_name"/>
       <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
       <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"/>
       <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
                            rules="required" v-model="personID"/>
+      <upload-image-input name="สำเนาบัตรประชาชน" placeholder="กรอกที่อยู่"
+                          rules="required" v-model="address"/>
       <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
                            v-model="telephone"/>
       <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required"/>
-      <div class="row form-group">
-        <div class="col-3 d-flex flex-column align-items-end">
-          <div>
-            <span class="text-danger" style="font-weight: bold">*</span>
-            <span style="font-weight: bold; font-size: 14px">ที่อยู่:</span>
-          </div>
-
-          <span class="text-muted text-right" style="font-size: 14px">(ตามที่ปรากฏในบัตรประชาชน)</span>
-        </div>
-        <div class="col-9 d-flex align-items-center justify-content-start">
-          <textarea class="form-control" placeholder="กรอกที่อยู่"></textarea>
-        </div>
-      </div>
+      <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
+                       rules="required" v-model="address"/>
       <div class="row form-group">
         <div class="col-3 d-flex align-items-center justify-content-end">
           <span class="text-danger" style="font-weight: bold">*</span> <span
@@ -91,7 +83,7 @@ Vue.component('detail-step', {
     </span>
   </div>
   <div class="border rounded py-4 px-3">
-  <p>1.ชื่อ-นามสกุล ทายาทหรือผู้รับมรดก</p>
+    <p>1.ชื่อ-นามสกุล ทายาทหรือผู้รับมรดก</p>
     <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
     <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"/>
     <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
