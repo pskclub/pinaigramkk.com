@@ -7,7 +7,8 @@ function apiOptions () {
       'x-timestamp': '2019-08-15 18:24:00',
       'x-device': 'browser',
       language: 'th',
-      currency: 'thb'
+      currency: 'thb',
+      Authorization: getMe().access_token
     }
   }
 }
