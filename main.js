@@ -16,7 +16,7 @@ Vue.component('header-section', {
               </div>
               <div>
                 <p class="mt-0" style="font-weight: 500;margin-bottom:-8px;">ติดต่อสอบถาม</p>
-                <h3 class="m-0" style="font-weight: 800;">02-494-3898</h3>
+                <h3 class="m-0" style="font-weight: 800;">02-494-3898, 098-262-7990</h3>
               </div>
             </div>
 
@@ -45,7 +45,7 @@ Vue.component('navbar-section', {
         <a class="nav-link" href="#tanai">ทีมทนายผู้มีประสบการณ์</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#register">สมัครวันนี้ฟรีสัมนา</a>
+        <a class="nav-link" href="#register">สมัครวันนี้ฟรีสัมมนา</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#kkgroup">KK Group</a>
@@ -86,7 +86,7 @@ Vue.component('slide-show-section', {
                              style="display: inline-block;width: 15px;height: 15px;background: #4A4A4A 0% 0% no-repeat padding-box;border-radius: 100%"></span>จัดทำตามหลักถูกต้องตามกฏหมาย
                     </p>
                     <p><span class="mr-3"
-                             style="display: inline-block;width: 15px;height: 15px;background: #4A4A4A 0% 0% no-repeat padding-box;border-radius: 100%"></span>จัดเก็บในอาคารนิรภัยอัคคีภัยและป้องกันการโจรกรรม
+                             style="display: inline-block;width: 15px;height: 15px;background: #4A4A4A 0% 0% no-repeat padding-box;border-radius: 100%"></span>จจัดเก็บในตู้เซฟนิรภัยป้องกันอัคคีภัย และการโจรกรรม
                     </p>
                   </div>
 
@@ -139,7 +139,7 @@ Vue.component('customer-section', {
             src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1YZSqAOuMvsqzBMx6pt0NxguRzX.jpg">
           <p class="text-center position-absolute w-100 font-weight-bold"
              style="font-size: 28px;top:0;margin-top: 30px;">
-            <span>หากไม่มีพินัยกรรม</span> <br><span>อาจเกิดปัญหา และข้อขัดแย้งในทัพย์สิน</span></p>
+            <span>หากไม่มีพินัยกรรม</span> <br><span>อาจเกิดปัญหา และข้อขัดแย้งในทรัพย์สิน</span></p>
         </div>
         <img alt=""
              src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1YZSVbZGyF3p6SqiG6y8XHPGYrM.jpg">
@@ -176,7 +176,7 @@ Vue.component('howto-section', {
           <div class="position-absolute text-center w-100" style="top:130px;">
             <div class="d-flex align-items-center flex-column" style="height: 100px;">
               <h3 class="font-weight-bold w-100">สมัคร</h3>
-              <p class="font-weight-bold w-100">กรอกข้อมูลผู้รับพินัยกรรม</p>
+              <p class="font-weight-bold w-100">กรอกข้อมูลต่างๆ ของท่าน</p>
             </div>
             <div class="d-flex align-items-center justify-content-center" style="height: 120px;">
               <img
@@ -274,7 +274,7 @@ Vue.component('register-section', {
     this.isAuth = isAuth()
   },
   template: `<div class="container py-5" id="register">
-  <h1 class="text-info text-center">สมัครวันนี้ฟรีสัมนา</h1>
+  <h1 class="text-info text-center">สมัครวันนี้ฟรีสัมมนา</h1>
   <div class="text-center mt-5" style="color:#525553;">
     <p class="mb-0" style="font-size: 24px"><b>ในวันที่ 25 กุมภาพันธ์ 2563</b></p>
     <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
@@ -377,7 +377,7 @@ Vue.component('register-section', {
     <p class="mt-5" style="font-size: 28px">สอบถามข้อมูลเพิ่มเติมได้ที่ <img
       alt="" class="mx-2" height="15px"
       src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Ybpm1JCApZJNUZMhoN6sGNehWU.jpg">
-      <b>02-494-3898 ต่อแผนกพินัยกรรม</b></p>
+      <b>02-494-3898, 098-262-7990 ต่อแผนกพินัยกรรม</b></p>
   </div>
 </div>
   `
@@ -495,7 +495,7 @@ Vue.component('map-section', {
     <p class="text-center mt-3"><b>8/39 อาคาร เคเค ซิตี้ หมู่ที่ 9 ถ.บางบัวทอง-สุพรรณบุรี <br>
       ต.ละหาร อ.บางบัวทอง จ.นนทบุรี 11110
     </b></p>
-    <p class="text-center"><b>Tel.</b> <span class="text-info">02-494-3898</span></p>
+    <p class="text-center"><b>Tel.</b> <span class="text-info">02-494-3898, 098-262-7990</span></p>
   </div>
   `
 })

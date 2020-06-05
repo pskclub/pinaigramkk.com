@@ -133,42 +133,12 @@ Vue.component('register-step', {
                            rules="required" v-model="personID"/>
       <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
                        rules="required" v-model="address"/>
-      <div class="row form-group">
-        <div class="col-3 d-flex align-items-center justify-content-end">
-          <span class="text-danger" style="font-weight: bold">*</span> <span
-          style="font-weight: bold; font-size: 14px">จังหวัด:</span>
-        </div>
-        <div class="col-7 d-flex align-items-center justify-content-start">
-          <select class="form-control">
-            <option>กรุณาเลือกจังหวัด</option>
-            <option>Bangkok</option>
-          </select>
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-3 d-flex align-items-center justify-content-end">
-          <span class="text-danger" style="font-weight: bold">*</span> <span
-          style="font-weight: bold; font-size: 14px">อำเภอ/เขต:</span>
-        </div>
-        <div class="col-7 d-flex align-items-center justify-content-start">
-          <select class="form-control">
-            <option>กรุณาเลือกอำเภอ/เขต</option>
-            <option>Bangkok</option>
-          </select>
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-3 d-flex align-items-center justify-content-end">
-          <span class="text-danger" style="font-weight: bold">*</span> <span
-          style="font-weight: bold; font-size: 14px">ตำบล/แขวง:</span>
-        </div>
-        <div class="col-7 d-flex align-items-center justify-content-start">
-          <select class="form-control">
-            <option>กรุณาเลือกตำบล/แขวง</option>
-            <option>หัวหิน</option>
-          </select>
-        </div>
-      </div>
+      <select-address-input name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
+                            rules="required" v-model="address"/>
+      <select-address-input name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
+                            rules="required" v-model="address"/>
+      <select-address-input name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
+                            rules="required" v-model="address"/>
       <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
                            rules="required" v-model="zipcode"/>
       <div class="row justify-content-center">

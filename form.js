@@ -214,10 +214,10 @@ Vue.component('text-input-optional', {
       style="font-weight: bold; font-size: 14px">{{name}}:</span>
     </div>
     <div class="col-9">
-    <div :class="['d-flex align-items-center justify-content-start']">
-      <input v-model="currentValue" type="text" :class="{ 'form-control' :true, 'is-invalid': errors[0]}"
-             :placeholder="placeholder">
-    </div>
+      <div :class="['d-flex align-items-center justify-content-start']">
+        <input v-model="currentValue" type="text" :class="{ 'form-control' :true, 'is-invalid': errors[0]}"
+               :placeholder="placeholder">
+      </div>
     </div>
     <div class="invalid-feedback">
       {{ errors[0] }}
@@ -355,6 +355,58 @@ Vue.component('upload-image-input', {
     </div>
     <div class="invalid-feedback">
       {{ errors[0] }}
+    </div>
+  </div>
+</ValidationProvider>
+  `
+})
+
+Vue.component('select-address-input', {
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    vid: {
+      type: String,
+      default: undefined
+    }
+  },
+  data: () => ({
+    currentValue: ''
+  }),
+  watch: {
+    currentValue (val) {
+      // allows us to use v-model on our input.
+      this.$emit('input', val)
+    }
+  },
+  template: `<ValidationProvider :name="name" :vid="vid" rules="required" v-slot="{ errors }">
+  <div class="row form-group">
+    <div class="col-3 d-flex align-items-center justify-content-end">
+      <span class="text-danger" style="font-weight: bold">*</span> <span
+      style="font-weight: bold; font-size: 14px">{{name}}:</span>
+    </div>
+    <div class="col-9 d-flex">
+      <select class="form-control">
+        <option>{{placeholder}}</option>
+        <option>หัวหิน</option>
+      </select>
+      <div class="invalid-feedback">
+        {{ errors[0] }}
+      </div>
     </div>
   </div>
 </ValidationProvider>
