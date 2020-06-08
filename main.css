@@ -51,3 +51,7 @@
     border-radius: 2px !important;
     width: 200px !important;
 }
+
+.pointer{
+    cursor: pointer;
+}

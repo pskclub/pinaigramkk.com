@@ -262,7 +262,7 @@ Vue.component('register-section', {
   data: function () {
     return {
       step: 0,
-      isAuth: false,
+      isAuth: false
     }
   },
   methods: {
@@ -500,14 +500,95 @@ Vue.component('map-section', {
   `
 })
 
+const footerModalContent = {
+  privacy: privacy,
+  conditions: condition,
+  shippingStep: shippingStep,
+  refundStep: refundStep
+}
+
 Vue.component('footer-section', {
-  template: `
-   <div class="text-center py-3" style="background-color: #4A4A4A;color: white;font-size: 14px">
+  data: function () {
+    return {
+      modalText: footerModalContent.privacy,
+      modalTitle: ''
+    }
+  },
+  methods: {
+    onPrivacy: function () {
+      this.modalText = footerModalContent.privacy
+      this.modalTitle = 'นโยบายความเป็นส่วนตัว'
+    },
+    onCondition: function () {
+      this.modalText = footerModalContent.conditions
+      this.modalTitle = 'ข้อกำหนดเงื่อนไข'
+    },
+    onShipping: function () {
+      this.modalText = footerModalContent.shippingStep
+      this.modalTitle = 'ขั้นตอนจัดส่ง'
+    },
+    onRefund: function () {
+      this.modalText = footerModalContent.refundStep
+      this.modalTitle = 'ขั้นตอนคืนหรือเปลี่ยน'
+    }
+  },
+  template: `<div>
+  <div style="background-color: #F9E014">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="modal fade footer-modal" id="policyModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="pb-3">
+                  <h4 class="text-center mb-4" style="color: #0771FF;">{{modalTitle}}</h4>
+                  <div class="border-top border-bottom ">
+                    <div style="white-space: pre-line;word-break: break-word;max-height: 400px;overflow-y: auto"
+                         class="my-3 px-3 ">
+                      {{modalText}}
+                    </div>
+                  </div>
+
+                </div>
+                <div class="text-center py-3">
+                  <button type="button" class="btn btn-light border" data-dismiss="modal"
+                          style="width: 200px;background-color: white">
+                    ปิด
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-center my-3 lead pointer" data-toggle="modal" data-target="#policyModal" @click="onPrivacy">
+            นโยบายความเป็นส่วนตัว</p>
+        </div>
+        <div class="col">
+          <p class="text-center my-3 lead pointer" data-toggle="modal" data-target="#policyModal" @click="onCondition">
+            ข้อกำหนดเงื่อนไข</p>
+        </div>
+        <div class="col">
+          <p class="text-center my-3 lead pointer" data-toggle="modal" data-target="#policyModal" @click="onShipping">
+            ขั้นตอนจัดส่ง</p>
+        </div>
+        <div class="col">
+          <p class="text-center my-3 lead pointer" data-toggle="modal" data-target="#policyModal" @click="onRefund">
+            ขั้นตอนคืนหรือเปลี่ยน</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center py-3" style="background-color: #4A4A4A;color: white;font-size: 14px">
     <p class="m-0">
       Copyright © 2020 KKGRP | All Rights Reserved
     </p>
     <p class="m-0">Web Design by <a class="text-info" href="https://3dsinteractive.com">3DS INTERACTIVE</a></p>
   </div>
+</div>
   `
 })
 
