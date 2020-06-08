@@ -555,7 +555,7 @@ Vue.component('footer-section', {
                   </div>
 
                 </div>
-                <div class="text-center py-3">
+                <div class="text-center py-3" style="margin: 0 auto;">
                   <button type="button" class="btn btn-light border" data-dismiss="modal"
                           style="width: 200px;background-color: white">
                     ปิด
