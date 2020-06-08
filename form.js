@@ -397,8 +397,9 @@ Vue.component('select-address-input', {
       // allows us to use v-model on our input.
       this.$emit('input', val)
     },
-    parent (val,oldVal) {
-      if(val !== oldVal){
+    parent (val, oldVal) {
+      if (val !== oldVal) {
+        this.currentValue = ''
         this.fetch()
       }
     }
@@ -407,7 +408,7 @@ Vue.component('select-address-input', {
     this.fetch()
   },
   methods: {
-    fetch : function (){
+    fetch: function () {
       if (this.parent) {
         NewRequester.get(`address/child/${this.parent}`, apiOptions()).then(res => {
           this.options = res.data.items.map((item) => ({ value: item.addr_id, label: item.name }))
