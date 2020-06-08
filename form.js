@@ -375,6 +375,10 @@ Vue.component('select-address-input', {
       type: String,
       default: ''
     },
+    parent: {
+      type: String,
+      default: ''
+    },
     placeholder: {
       type: String,
       default: ''
@@ -385,12 +389,30 @@ Vue.component('select-address-input', {
     }
   },
   data: () => ({
-    currentValue: ''
+    currentValue: '',
+    options: []
   }),
   watch: {
     currentValue (val) {
       // allows us to use v-model on our input.
       this.$emit('input', val)
+    },
+    parent (val,oldVal) {
+      if(val !== oldVal){
+        this.fetch()
+      }
+    }
+  },
+  mounted: function () {
+    this.fetch()
+  },
+  methods: {
+    fetch : function (){
+      if (this.parent) {
+        NewRequester.get(`address/child/${this.parent}`, apiOptions()).then(res => {
+          this.options = res.data.items.map((item) => ({ value: item.addr_id, label: item.name }))
+        })
+      }
     }
   },
   template: `<ValidationProvider :name="name" :vid="vid" rules="required" v-slot="{ errors }">
@@ -400,9 +422,9 @@ Vue.component('select-address-input', {
       style="font-weight: bold; font-size: 14px">{{name}}:</span>
     </div>
     <div class="col-9 d-flex">
-      <select class="form-control">
-        <option>{{placeholder}}</option>
-        <option>หัวหิน</option>
+      <select class="form-control" :disabled="options.length === 0" v-model="currentValue">
+        <option value="">{{placeholder}}</option>
+        <option v-for="option in options" :key="option.value" :value="option.value">{{option.label}}</option>
       </select>
       <div class="invalid-feedback">
         {{ errors[0] }}

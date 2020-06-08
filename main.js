@@ -538,7 +538,7 @@ Vue.component('footer-section', {
       <div class="row">
         <div class="col">
           <div class="modal fade footer-modal" id="policyModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header border-bottom-0">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">

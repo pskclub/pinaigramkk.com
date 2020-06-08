@@ -81,6 +81,7 @@ Vue.component('register-step', {
       telephone: '',
       email: '',
       personID: '',
+      country: countryId,
       address: '',
       province: '',
       district: '',
@@ -133,12 +134,12 @@ Vue.component('register-step', {
                            rules="required" v-model="personID"/>
       <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
                        rules="required" v-model="address"/>
-      <select-address-input name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
-                            rules="required" v-model="address"/>
-      <select-address-input name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
-                            rules="required" v-model="address"/>
-      <select-address-input name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
-                            rules="required" v-model="address"/>
+      <select-address-input :parent="country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
+                            rules="required" v-model="province"/>
+      <select-address-input :parent="province" name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
+                            rules="required" v-model="district"/>
+      <select-address-input :parent="district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
+                            rules="required" v-model="subDistrict"/>
       <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
                            rules="required" v-model="zipcode"/>
       <div class="row justify-content-center">
