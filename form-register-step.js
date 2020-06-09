@@ -138,8 +138,8 @@ Vue.component('register-step', {
       <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
                            v-model="telephone"/>
       <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="email"/>
-      <text-input-optional v-if="!isAuth" type="password" name="รหัสผ่าน" placeholder="กรอกรหัสผ่าน" rules="required" v-model="password"/>
-      <text-input-optional v-if="!isAuth" type="password" name="ยืนยันรหัสผ่าน" placeholder="กรอกยืนยันรหัสผ่าน" rules="required|confirmed:รหัสผ่าน" v-model="password_confirm"/>
+      <text-input-optional v-if="!isAuth" type="password" name="รหัสผ่าน" placeholder="กรอกรหัสผ่าน" vid="password" rules="required" v-model="password"/>
+      <text-input-optional v-if="!isAuth" type="password" name="ยืนยันรหัสผ่าน" placeholder="กรอกยืนยันรหัสผ่าน" rules="required|confirmed:password" v-model="password_confirm"/>
       <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
                            rules="required" v-model="personID"/>
       <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"

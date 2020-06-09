@@ -211,7 +211,7 @@ Vue.component('text-input-optional', {
       this.$emit('input', val)
     }
   },
-  template: `<ValidationProvider :name="name" rules="required" v-slot="{ errors }">
+  template: `<ValidationProvider :vid="vid || name" :name="name" :rules="rules" v-slot="{ errors }">
   <div class="row form-group">
     <div class="col-3 d-flex align-items-center justify-content-end text-right">
       <span class="text-danger" style="font-weight: bold">*</span> <span
