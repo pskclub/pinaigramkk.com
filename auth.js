@@ -21,12 +21,24 @@ Vue.component('login-form', {
     }
   },
   template: `<ValidationObserver v-slot="{ invalid }" ref="form">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
+  <div style="background-color: #FBEC7D" class="p-4 row mx-5">
+    <div class="col-md-5 border-right d-flex flex-column justify-content-center"
+         style="border-color: #000000 !important;">
+      <h4 class="font-weight-bold">เคยสมัครแล้ว?</h4>
+      <p>เข้าสู่ระบบด้วยอีเมลและรหัสผ่าน</p>
+    </div>
+    <div class="col-md-7">
       <form @submit.prevent="onSubmit">
-         <text-input v-model="email" name="Email" rules="required" />
-         <text-input type="password" v-model="password" name="Password" rules="required" />
-        <button type="submit" class="btn btn-primary" :disabled="invalid">Login</button>
+        <text-input-optional v-model="email" name="Email" rules="required"/>
+        <text-input-optional type="password" v-model="password" name="Password" rules="required"/>
+        <div class="row">
+          <div class="col-9 offset-3">
+            <button type="submit" class="btn btn-dark" :disabled="invalid" style="background-color: #000000!important;width: 200px">
+              Login
+            </button>
+          </div>
+        </div>
+
       </form>
     </div>
   </div>

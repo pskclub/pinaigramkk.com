@@ -262,16 +262,12 @@ Vue.component('register-section', {
   data: function () {
     return {
       step: 0,
-      isAuth: false
     }
   },
   methods: {
     setStep (step) {
       this.step = step
     }
-  },
-  created: function () {
-    this.isAuth = isAuth()
   },
   template: `<div class="container py-5" id="register">
   <h1 class="text-info text-center">สมัครวันนี้ฟรีสัมมนา</h1>
@@ -280,15 +276,11 @@ Vue.component('register-section', {
     <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
   </div>
   <div v-if="step > 0">
-    <login-form v-if="!isAuth"></login-form>
-    <div v-else>
       <register-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 1"></register-step>
       <payment-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 2"></payment-step>
       <detail-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 3"></detail-step>
       <address-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 4"></address-step>
       <complete-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 5"></complete-step>
-    </div>
-
   </div>
   <div v-else class="row equal p-5">
     <div class="col-md-4 ">

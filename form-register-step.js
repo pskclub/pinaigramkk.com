@@ -75,6 +75,7 @@ Vue.component('form-step-bar', {
 Vue.component('register-step', {
   data: function () {
     return {
+      isAuth: false,
       start_name: '',
       firstName: '',
       lastName: '',
@@ -86,8 +87,13 @@ Vue.component('register-step', {
       province: '',
       district: '',
       subDistrict: '',
-      zipcode: ''
+      zipcode: '',
+      password: '',
+      password_confirm: ''
     }
+  },
+  created: function () {
+    this.isAuth = isAuth()
   },
   template: `<div>
   <div class="row justify-content-center p-4">
@@ -115,21 +121,25 @@ Vue.component('register-step', {
   </div>
   <hr>
   <form-step-bar></form-step-bar>
+  <login-form v-if="!isAuth"></login-form>
   <div class="row px-5 py-4">
     <div class="col text-center">
       <span class="text-danger" style="font-weight: bold">*</span> <span
       style="color: #0771FF; font-weight: bold">ผู้สมัครทำพินัยกรรม ต้องมีอายุไม่ต่ำกว่า 15ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ และต้องไม่เป็นบุคคลไร้ความสามารถ</span>
     </div>
   </div>
+
   <div class="row px-5 py-4 justify-content-center">
     <div class="col-10">
       <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="start_name"/>
       <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
       <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"
                            v-model="lastName"/>
-      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="email"/>
       <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
                            v-model="telephone"/>
+      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="email"/>
+      <text-input-optional type="password" name="รหัสผ่าน" placeholder="กรอกรหัสผ่าน" rules="required" v-model="password"/>
+      <text-input-optional type="password" name="ยืนยันรหัสผ่าน" placeholder="กรอกยืนยันรหัสผ่าน" rules="required" v-model="password_confirm"/>
       <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
                            rules="required" v-model="personID"/>
       <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"

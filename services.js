@@ -8,7 +8,7 @@ function apiOptions () {
       'x-device': 'browser',
       language: 'th',
       currency: 'thb',
-      Authorization: getMe().access_token
+      Authorization: getMe() && getMe().access_token || null
     }
   }
 }
