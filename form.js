@@ -189,6 +189,10 @@ Vue.component('text-input-optional', {
       type: String,
       default: ''
     },
+    type: {
+      type: String,
+      default: 'text'
+    },
     name: {
       type: String,
       default: ''
@@ -214,13 +218,11 @@ Vue.component('text-input-optional', {
       style="font-weight: bold; font-size: 14px">{{name}}:</span>
     </div>
     <div class="col-9">
-      <div :class="['d-flex align-items-center justify-content-start']">
-        <input v-model="currentValue" type="text" :class="{ 'form-control' :true, 'is-invalid': errors[0]}"
-               :placeholder="placeholder">
+      <input v-model="currentValue" :type="type" :class="{ 'form-control' :true, 'is-invalid': errors[0]}"
+             :placeholder="placeholder || name">
+      <div class="invalid-feedback">
+        {{ errors[0] }}
       </div>
-    </div>
-    <div class="invalid-feedback">
-      {{ errors[0] }}
     </div>
   </div>
 </ValidationProvider>
