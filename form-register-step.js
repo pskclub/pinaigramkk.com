@@ -1,4 +1,3 @@
-
 Vue.component('form-step-bar', {
   props: {
     step: {
@@ -76,20 +75,22 @@ Vue.component('register-step', {
   data: function () {
     return {
       isAuth: false,
-      start_name: '',
-      firstName: '',
-      lastName: '',
-      telephone: '',
-      email: '',
-      personID: '',
-      country: countryId,
-      address: '',
-      province: '',
-      district: '',
-      subDistrict: '',
-      zipcode: '',
-      password: '',
-      password_confirm: ''
+      form: {
+        start_name: '',
+        firstName: '',
+        lastName: '',
+        telephone: '',
+        email: '',
+        personID: '',
+        country: countryId,
+        address: '',
+        province: '',
+        district: '',
+        subDistrict: '',
+        zipcode: '',
+        password: '',
+        password_confirm: ''
+      }
     }
   },
   created: function () {
@@ -131,27 +132,29 @@ Vue.component('register-step', {
 
   <div class="row px-5 py-4 justify-content-center">
     <div class="col-10">
-      <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="start_name"/>
-      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
+      <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="form.start_name"/>
+      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="form.firstName"/>
       <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"
-                           v-model="lastName"/>
+                           v-model="form.lastName"/>
       <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
-                           v-model="telephone"/>
-      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="email"/>
-      <text-input-optional v-if="!isAuth" type="password" name="รหัสผ่าน" placeholder="กรอกรหัสผ่าน" vid="password" rules="required" v-model="password"/>
-      <text-input-optional v-if="!isAuth" type="password" name="ยืนยันรหัสผ่าน" placeholder="กรอกยืนยันรหัสผ่าน" rules="required|confirmed:password" v-model="password_confirm"/>
+                           v-model="form.telephone"/>
+      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="form.email"/>
+      <text-input-optional v-if="!isAuth" type="password" name="รหัสผ่าน" placeholder="กรอกรหัสผ่าน" vid="password"
+       rules="required" v-model="form.password"/>
+      <text-input-optional v-if="!isAuth" type="password" name="ยืนยันรหัสผ่าน"
+       placeholder="กรอกยืนยันรหัสผ่าน" rules="required|confirmed:password" v-model="form.password_confirm"/>
       <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                           rules="required" v-model="personID"/>
+                           rules="required" v-model="form.personID"/>
       <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
-                       rules="required" v-model="address"/>
-      <select-address-input :parent="country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
-                            rules="required" v-model="province"/>
-      <select-address-input :parent="province" name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
-                            rules="required" v-model="district"/>
-      <select-address-input :parent="district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
-                            rules="required" v-model="subDistrict"/>
+                       rules="required" v-model="form.address"/>
+      <select-address-input :parent="form.country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
+                            rules="required" v-model="form.province"/>
+      <select-address-input :parent="form.province" name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
+                            rules="required" v-model="form.district"/>
+      <select-address-input :parent="form.district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
+                            rules="required" v-model="form.subDistrict"/>
       <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
-                           rules="required" v-model="zipcode"/>
+                           rules="required" v-model="form.zipcode"/>
       <div class="row justify-content-center">
         <div class="d-flex justify-content-center my-4">
           <button class="btn btn-blue btn-block" type="button" @click="$emit('changeStep',2)">สมัคร</button>
