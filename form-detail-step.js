@@ -20,7 +20,8 @@ Vue.component('detail-step-1', {
     }
   },
   template: `<div>
-  <div class="px-5 py-4 text-center"><span class="text-danger" style="font-weight: bold;">*</span>
+  <div class="px-5 py-4 text-center">
+  <span class="text-danger" style="font-weight: bold;">*</span>
     <span style="color: rgb(7, 113, 255); font-weight: bold;">
    {{msg}} 
     </span>
