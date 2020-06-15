@@ -1,4 +1,21 @@
 Vue.component('address-step', {
+  data: function () {
+    return {
+      form: {
+        start_name: '',
+        firstName: '',
+        lastName: '',
+        personID: '',
+        address: '',
+        province: '',
+        country: countryId,
+        district: '',
+        subDistrict: '',
+        zipcode: '',
+        telephone: ''
+      }
+    }
+  },
   template: `<div>
   <form-step-bar :step="4"></form-step-bar>
   <div class="mb-4  mt-5" style="padding: 10px 15px;
@@ -9,12 +26,12 @@ Vue.component('address-step', {
 
   <div class="row justify-content-center">
     <div class="col-10">
-      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
+      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="form.firstName"/>
       <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"/>
       <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                           rules="required" v-model="personID"/>
+                           rules="required" v-model="form.personID"/>
       <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
-                           v-model="telephone"/>
+                           v-model="form.telephone"/>
       <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required"/>
       <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
                        rules="required" v-model="form.address"/>
