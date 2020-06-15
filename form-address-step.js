@@ -16,64 +16,22 @@ Vue.component('address-step', {
       <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
                            v-model="telephone"/>
       <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required"/>
-      <div class="row form-group">
-        <div class="col-3 d-flex flex-column align-items-end">
-          <div>
-            <span class="text-danger" style="font-weight: bold">*</span>
-            <span style="font-weight: bold; font-size: 14px">ที่อยู่:</span>
-          </div>
-
-          <span class="text-muted text-right" style="font-size: 14px">(ตามที่ปรากฏในบัตรประชาชน)</span>
-        </div>
-        <div class="col-9 d-flex align-items-center justify-content-start">
-          <textarea class="form-control" placeholder="กรอกที่อยู่"></textarea>
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-3 d-flex align-items-center justify-content-end">
-          <span class="text-danger" style="font-weight: bold">*</span> <span
-          style="font-weight: bold; font-size: 14px">จังหวัด:</span>
-        </div>
-        <div class="col-7 d-flex align-items-center justify-content-start">
-          <select class="form-control">
-            <option>กรุณาเลือกจังหวัด</option>
-            <option>Bangkok</option>
-          </select>
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-3 d-flex align-items-center justify-content-end">
-          <span class="text-danger" style="font-weight: bold">*</span> <span
-          style="font-weight: bold; font-size: 14px">อำเภอ/เขต:</span>
-        </div>
-        <div class="col-7 d-flex align-items-center justify-content-start">
-          <select class="form-control">
-            <option>กรุณาเลือกอำเภอ/เขต</option>
-            <option>Bangkok</option>
-          </select>
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-3 d-flex align-items-center justify-content-end">
-          <span class="text-danger" style="font-weight: bold">*</span>
-          <span style="font-weight: bold; font-size: 14px">ตำบล/แขวง:</span>
-        </div>
-        <div class="col-7 d-flex align-items-center justify-content-start">
-          <select class="form-control">
-            <option>กรุณาเลือกตำบล/แขวง</option>
-            <option>หัวหิน</option>
-          </select>
-        </div>
-      </div>
-      <text-input-optional
-        className="col-7" type="text"
-        name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
-        rules="required" v-model="zipcode"/>
+      <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
+                       rules="required" v-model="form.address"/>
+      <select-address-input :parent="form.country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
+                            rules="required" v-model="form.province"/>
+      <select-address-input :parent="form.province" name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
+                            rules="required" v-model="form.district"/>
+      <select-address-input :parent="form.district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
+                            rules="required" v-model="form.subDistrict"/>
+      <text-input-optional type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
+                           rules="required" v-model="form.zipcode"/>
     </div>
   </div>
-  <div class="row justify-content-center">
+  <div class="row justify-content-center  border-top mt-4">
     <div class="d-flex justify-content-center my-4">
-      <button class="btn btn-blue btn-block" type="button" @click="$emit('changeStep',5)">สมัคร</button>
+      <button class="btn btn-default btn-block mr-4" type="button" @click="$emit('changeStep',3)">ย้อนกลับ</button>
+      <button class="btn btn-blue btn-block" type="button" @click="$emit('changeStep',5)">ยืนยัน</button>
     </div>
   </div>
 </div>`

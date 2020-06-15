@@ -114,7 +114,7 @@ Vue.component('detail-step', {
   },
   template: `<div>
   <form-step-bar :step="3"></form-step-bar>
-  <preview-step v-if="isShowPreview"/>
+  <preview-step v-if="isShowPreview" @changeStep="$emit('changeStep',$event)" @back="isShowPreview = false"/>
   <div v-else>
     <div class="mb-4  mt-5" style="padding: 10px 15px;
     background-color: rgb(248, 222, 25);
