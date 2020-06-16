@@ -47,7 +47,7 @@ Vue.component('start-name-input-field', {
     <label class="form-check-label">อื่นๆ</label>
   </div>
   <div v-if="isElse()">
-    <input type="text" @input="onChange" :value="value" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
+    <input type="text" @input="onChange($event.target.value)" :value="value" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
   </div>
 </div>
   `

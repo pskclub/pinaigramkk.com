@@ -110,10 +110,12 @@ Vue.component('register-step', {
           lastname: this.form.lastName,
           contact_email: this.form.email,
           contact_mobile: this.form.telephone
-        }).then(() => {
+        }).then((res) => {
           setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
           alert('register success')
-          this.$emit('changeStep',2)
+          this.$emit('changeStep', 2)
+        }).catch(e => {
+          alert(JSON.stringify(e.response))
         })
       })
     }
