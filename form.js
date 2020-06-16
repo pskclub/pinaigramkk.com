@@ -1,3 +1,58 @@
+Vue.component('start-name-input-field', {
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    errors: {
+      type: Array,
+      default: []
+    },
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    }
+  },
+  methods: {
+    onChange (val) {
+      this.$emit('input', val)
+    },
+    isElse () {
+      return this.value !== 'นาย' && this.value !== 'นาง' && this.value !== 'นางสาว'
+    }
+  },
+  template: `     <div class="align-items-center justify-content-start d-flex">
+  <div class="form-check mr-1" @click="onChange('นาย')">
+    <input class="form-check-input" :name="name" :checked="value === 'นาย'" type="radio">
+    <label class="form-check-label">นาย</label>
+  </div>
+  <div class="form-check mr-1" @click="onChange('นาง')">
+    <input class="form-check-input" :name="name" :checked="value === 'นาง'" type="radio" value="nang">
+    <label class="form-check-label">นาง</label>
+  </div>
+  <div class="form-check mr-1" @click="onChange('นางสาว')">
+    <input class="form-check-input" :name="name" :checked="value === 'นางสาว'" type="radio" value="nangsao">
+    <label class="form-check-label">นางสาว</label>
+  </div>
+  <div class="form-check mr-2" @click="onChange('')">
+    <input class="form-check-input" type="radio" value="other" :checked="isElse()">
+    <label class="form-check-label">อื่นๆ</label>
+  </div>
+  <div v-if="isElse()">
+    <input type="text" @input="onChange" :value="value" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
+  </div>
+</div>
+  `
+})
+
 Vue.component('start-name-input', {
   props: {
     value: {
@@ -45,25 +100,7 @@ Vue.component('start-name-input', {
       style="font-weight: bold">คำนำหน้าชื่อ:</span>
     </div>
     <div class="col-9 d-flex align-items-center justify-content-start">
-      <div class="form-check mr-1"  @click="onSelect('นาย')">
-        <input class="form-check-input" :name="name" :checked="currentValue === 'นาย'" type="radio">
-        <label class="form-check-label" >นาย</label>
-      </div>
-      <div class="form-check mr-1" @click="onSelect('นาง')">
-        <input class="form-check-input" :name="name" :checked="currentValue === 'นาง'"  type="radio" value="nang">
-        <label class="form-check-label" >นาง</label>
-      </div>
-      <div class="form-check mr-1" @click="onSelect('นางสาว')">
-        <input class="form-check-input" :name="name" :checked="currentValue === 'นางสาว'"  type="radio" value="nangsao">
-        <label class="form-check-label" >นางสาว</label>
-      </div>
-      <div class="form-check mr-2" @click="onSelect('')">
-        <input class="form-check-input" type="radio" value="other" :checked="isElse()">
-        <label class="form-check-label">อื่นๆ</label>
-      </div>
-      <div v-if="isElse()">
-        <input type="text" v-model="currentValue" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
-      </div>
+        <start-name-input-field :errors="errors" v-model="currentValue" v-bind="$props"/>
       <div class="invalid-feedback">
         {{ errors[0] }}
       </div>

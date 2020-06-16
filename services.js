@@ -1,4 +1,4 @@
-let BASE_API = 'https://stg-ecom.pams.ai/api'
+let BASE_API = 'https://pinaigumkk-ecom.pams.ai/api'
 
 function apiOptions () {
   return {
@@ -20,8 +20,16 @@ function login (username, password) {
   }, apiOptions())
 }
 
-function register (email) {
+function register ({ email, password, firstname, lastname, contact_email, contact_mobile }) {
   return NewRequester.post(`/member/email`, {
     email: email
-  }, apiOptions())
+  }, apiOptions()).then(res => NewRequester.post(`/member/register`, {
+    email, password, firstname, lastname, contact_email, contact_mobile
+  },{
+    ... apiOptions(),
+    headers: {
+      ... apiOptions().headers,
+      Authorization : res.data.verify_token
+  }
+  }))
 }

@@ -96,6 +96,28 @@ Vue.component('register-step', {
   created: function () {
     this.isAuth = isAuth()
   },
+  methods: {
+    onSubmit: function () {
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return
+        }
+
+        register({
+          email: this.form.email,
+          password: this.form.password,
+          firstname: this.form.firstName,
+          lastname: this.form.lastName,
+          contact_email: this.form.email,
+          contact_mobile: this.form.telephone
+        }).then(() => {
+          setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
+          alert('register success')
+          this.$emit('changeStep',2)
+        })
+      })
+    }
+  },
   template: `<div>
   <div class="row justify-content-center p-4">
     <div class="col-auto">
@@ -132,34 +154,38 @@ Vue.component('register-step', {
 
   <div class="row px-5 py-4 justify-content-center">
     <div class="col-10">
-      <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="form.start_name"/>
-      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="form.firstName"/>
-      <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"
-                           v-model="form.lastName"/>
-      <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
-                           v-model="form.telephone"/>
-      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="form.email"/>
-      <text-input-optional v-if="!isAuth" type="password" name="รหัสผ่าน" placeholder="กรอกรหัสผ่าน" vid="password"
-       rules="required" v-model="form.password"/>
-      <text-input-optional v-if="!isAuth" type="password" name="ยืนยันรหัสผ่าน"
-       placeholder="กรอกยืนยันรหัสผ่าน" rules="required|confirmed:password" v-model="form.password_confirm"/>
-      <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                           rules="required" v-model="form.personID"/>
-      <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
-                       rules="required" v-model="form.address"/>
-      <select-address-input :parent="form.country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
-                            rules="required" v-model="form.province"/>
-      <select-address-input :parent="form.province" name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
-                            rules="required" v-model="form.district"/>
-      <select-address-input :parent="form.district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
-                            rules="required" v-model="form.subDistrict"/>
-      <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
-                           rules="required" v-model="form.zipcode"/>
-      <div class="row justify-content-center">
-        <div class="d-flex justify-content-center my-4">
-          <button class="btn btn-blue btn-block" type="button" @click="$emit('changeStep',2)">สมัคร</button>
+     <ValidationObserver v-slot="{ invalid }" ref="form">
+        <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="form.start_name"/>
+        <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required"
+                             v-model="form.firstName"/>
+        <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"
+                             v-model="form.lastName"/>
+        <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
+                             v-model="form.telephone"/>
+        <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="form.email"/>
+        <text-input-optional v-if="!isAuth" type="password" name="รหัสผ่าน" placeholder="กรอกรหัสผ่าน" vid="password"
+                             rules="required" v-model="form.password"/>
+        <text-input-optional v-if="!isAuth" type="password" name="ยืนยันรหัสผ่าน"
+                             placeholder="กรอกยืนยันรหัสผ่าน" rules="required|confirmed:password"
+                             v-model="form.password_confirm"/>
+        <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
+                             rules="required" v-model="form.personID"/>
+        <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
+                         rules="required" v-model="form.address"/>
+        <select-address-input :parent="form.country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
+                              rules="required" v-model="form.province"/>
+        <select-address-input :parent="form.province" name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
+                              rules="required" v-model="form.district"/>
+        <select-address-input :parent="form.district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
+                              rules="required" v-model="form.subDistrict"/>
+        <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
+                             rules="required" v-model="form.zipcode"/>
+        <div class="row justify-content-center">
+          <div class="d-flex justify-content-center my-4">
+            <button :disabled="invalid" class="btn btn-blue btn-block" type="button" @click="onSubmit">สมัคร</button>
+          </div>
         </div>
-      </div>
+      </ValidationObserver>
     </div>
   </div>
 </div>
