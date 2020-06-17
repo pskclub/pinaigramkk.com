@@ -98,11 +98,9 @@ Vue.component('register-step', {
   },
   methods: {
     onSubmit: function () {
-      this.$refs.form.validate().then(success => {
-        if (!success) {
-          return
-        }
-
+      if (this.isAuth) {
+        this.$emit('changeStep', 2)
+      } else {
         register({
           email: this.form.email,
           password: this.form.password,
@@ -115,9 +113,16 @@ Vue.component('register-step', {
           alert('register success')
           this.$emit('changeStep', 2)
         }).catch(e => {
-          alert(JSON.stringify(e.response))
+          alert(JSON.stringify(e.response.data))
         })
-      })
+      }
+      // this.$refs.form.validate().then(success => {
+      //   if (!success) {
+      //     return
+      //   }
+      //
+      //
+      // })
     }
   },
   template: `<div>

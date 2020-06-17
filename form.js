@@ -110,6 +110,118 @@ Vue.component('start-name-input', {
   `
 })
 
+Vue.component('manager-options-input-field', {
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    errors: {
+      type: Array,
+      default: []
+    },
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    }
+  },
+  methods: {
+    onChange (val) {
+      this.$emit('input', val)
+    },
+    isElse () {
+      return this.value !== 'คู่สมรส' && this.value !== 'บุตร'
+    }
+  },
+  template: `     <div class="align-items-center justify-content-start d-flex">
+  <div class="form-check mr-1" @click="onChange('คู่สมรส')">
+    <input class="form-check-input" :name="name" :checked="value === 'คู่สมรส'" type="radio">
+    <label class="form-check-label">คู่สมรส</label>
+  </div>
+  <div class="form-check mr-1" @click="onChange('บุตร')">
+    <input class="form-check-input" :name="name" :checked="value === 'บุตร'" type="radio">
+    <label class="form-check-label">บุตร</label>
+  </div>
+  <div class="form-check mr-2" @click="onChange('')">
+    <input class="form-check-input" type="radio" value="other" placeholder="ความสัมพันธ์" :checked="isElse()">
+    <label class="form-check-label">บุคคลอื่น</label>
+  </div>
+  <div v-if="isElse()">
+    <input type="text" @input="onChange($event.target.value)" :value="value" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
+    <div class="invalid-feedback">
+        {{ errors[0] }}
+      </div>
+  </div>
+</div>
+  `
+})
+
+Vue.component('manager-options-input', {
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    index: {
+      type: Number,
+      default: 1
+    },
+    vid: {
+      type: String,
+      default: undefined
+    }
+  },
+  data: () => ({
+    currentValue: ''
+  }),
+  watch: {
+    currentValue (val) {
+      // allows us to use v-model on our input.
+      this.$emit('input', val)
+    }
+  },
+  methods: {
+    onSelect (val) {
+      this.currentValue = val
+    },
+    isElse () {
+      return this.currentValue !== 'คู่สมรส' && this.currentValue !== 'บุตร'
+    }
+  },
+  template: `<ValidationProvider :name="name" rules="required" v-slot="{ errors }">
+  <div class="row form-group">
+    <div class="col-3 d-flex align-items-center justify-content-end">
+      <span class="text-danger" style="font-weight: bold">*</span> <span
+      style="font-weight: bold">ผู้จัดการมรดกคนที่ {{index}} :</span>
+    </div>
+    <div class="col-9 d-flex align-items-center justify-content-start">
+      <manager-options-input-field :errors="errors" v-model="currentValue" v-bind="$props"/>
+    </div>
+  </div>
+</ValidationProvider>
+  `
+})
+
 Vue.component('text-input', {
   props: {
     value: {

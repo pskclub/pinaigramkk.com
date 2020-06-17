@@ -2,11 +2,16 @@ Vue.component('detail-step-1', {
   props: {
     msg: {
       type: String
+    },
+    index: {
+      type: Number,
+      default: 1
     }
   },
   data: function () {
     return {
       form: {
+        manager: '',
         start_name: '',
         firstName: '',
         lastName: '',
@@ -28,6 +33,7 @@ Vue.component('detail-step-1', {
   </div>
   <div class="row justify-content-center">
     <div class="col-10">
+      <manager-options-input name="ผู้จัดการมรดก" :index="index" rules="required" v-model="form.manager"/>
       <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="form.start_name"/>
       <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required"
                            v-model="form.firstName"/>
@@ -122,8 +128,10 @@ Vue.component('detail-step', {
       <h5 class="mb-0">การแต่งตั้งผู้จัดการมรดก</h5>
     </div>
     <detail-step-1
+      index="1"
       msg="ผู้จัดการมรดก ต้องมีอายุไม่ต่ำกว่า 20 ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ, ไม่เป็นผู้ไร้ความสามารถ และต้องไม่เป็นบุคคลล้มละลาย"/>
     <detail-step-1
+      index="2"
       msg="หากผู้จัดการมรดกคนที่ 1 ของข้าฯ ถึงแก่กรรมก่อน หรือไม่ยอมรับ หรือไม่มีความสามารถ ข้าฯ ขอแต่งตั้งผู้จัดการมรดกคนที่ 2 (แทนที่)"/>
 
     <div class="mb-4  mt-5" style="padding: 10px 15px;
