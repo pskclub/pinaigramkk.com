@@ -29,10 +29,10 @@ Vue.component('address-step', {
       <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="form.firstName"/>
       <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"/>
       <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                           rules="required" v-model="form.personID"/>
-      <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
+                           rules="required|numeric|length:13" v-model="form.personID"/>
+      <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required|numeric"
                            v-model="form.telephone"/>
-      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required"/>
+      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required|email"/>
       <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
                        rules="required" v-model="form.address"/>
       <select-address-input :parent="form.country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"

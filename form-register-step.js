@@ -162,16 +162,16 @@ Vue.component('register-step', {
                              v-model="form.firstName"/>
         <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"
                              v-model="form.lastName"/>
-        <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required"
+        <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required|numeric"
                              v-model="form.telephone"/>
-        <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required" v-model="form.email"/>
+        <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required|email" v-model="form.email"/>
         <text-input-optional v-if="!isAuth" type="password" name="รหัสผ่าน" placeholder="กรอกรหัสผ่าน" vid="password"
                              rules="required" v-model="form.password"/>
         <text-input-optional v-if="!isAuth" type="password" name="ยืนยันรหัสผ่าน"
                              placeholder="กรอกยืนยันรหัสผ่าน" rules="required|confirmed:password"
                              v-model="form.password_confirm"/>
         <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                             rules="required" v-model="form.personID"/>
+                             rules="required|numeric|length:13" v-model="form.personID"/>
         <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
                          rules="required" v-model="form.address"/>
         <select-address-input :parent="form.country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"

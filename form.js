@@ -48,6 +48,9 @@ Vue.component('start-name-input-field', {
   </div>
   <div v-if="isElse()">
     <input type="text" @input="onChange($event.target.value)" :value="value" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
+    <div class="invalid-feedback">
+        {{ errors[0] }}
+      </div>
   </div>
 </div>
   `
@@ -100,10 +103,7 @@ Vue.component('start-name-input', {
       style="font-weight: bold">คำนำหน้าชื่อ:</span>
     </div>
     <div class="col-9 d-flex align-items-center justify-content-start">
-        <start-name-input-field :errors="errors" v-model="currentValue" v-bind="$props"/>
-      <div class="invalid-feedback">
-        {{ errors[0] }}
-      </div>
+      <start-name-input-field :errors="errors" v-model="currentValue" v-bind="$props"/>
     </div>
   </div>
 </ValidationProvider>
