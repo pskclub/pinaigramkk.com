@@ -263,7 +263,7 @@ Vue.component('register-section', {
     return {
       step: 0,
       isAuth: false,
-      step1Data: null
+      registerStepData: null
     }
   },
   created: function () {
@@ -285,7 +285,7 @@ Vue.component('register-section', {
         })
     },
     registerStepSubmit (form) {
-      this.step1Data = form
+      this.registerStepData = form
       if (!this.isAuth) {
         register({
           email: form.email,
