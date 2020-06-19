@@ -64,6 +64,8 @@ Vue.component('register-form', {
           setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
           alert('login success')
           window.location.replace('/')
+        }).catch(() => {
+          alert('login fail')
         })
       })
     }
