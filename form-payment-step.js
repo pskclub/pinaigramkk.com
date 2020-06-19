@@ -18,7 +18,7 @@ Vue.component('payment-step', {
       })
     }
   },
-  template: `<div>
+  template: `<ValidationObserver v-slot="{ invalid }" ref="form">
   <form-step-bar :step="2"></form-step-bar>
   <div class="row justify-content-center">
     <div class="col-md-8">
@@ -35,8 +35,8 @@ Vue.component('payment-step', {
 
   <div class="row justify-content-center">
     <div class="d-flex justify-content-center my-4">
-      <button class="btn btn-blue btn-block" type="button" @click="onSubmit">ชำระเงิน</button>
+      <button class="btn btn-blue btn-block" :disabled="invalid" type="button" @click="onSubmit">ชำระเงิน</button>
     </div>
   </div>
-</div>`
+</ValidationObserver>`
 })

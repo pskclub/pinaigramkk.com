@@ -298,13 +298,13 @@ Vue.component('register-section', {
           .then((res) => {
             setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
             alert('register success')
-            this.$emit('changeStep', 2)
+            this.setStep(2)
           }).catch(e => {
           console.log(JSON.stringify(e))
           alert(JSON.stringify(e.response.data))
         })
       } else {
-        this.$emit('changeStep', 2)
+        this.setStep(2)
       }
     }
   },

@@ -62,10 +62,15 @@ function addAddress (data = {}) {
   }, apiOptions())
 }
 
+function createOrder (checkout_id) {
+  return NewRequester.post(`/order/create`, {
+    'checkout_id': checkout_id
+  }, apiOptions())
+}
+
 function makeOrder (product_id, sku_id, data) {
   return selectProduct(product_id, sku_id)
-    .then((res) => checkout())
-    .then((res) => addAddress({
+    .then(() => addAddress({
       'country_id': data.country,
       'name_of_shipping': data.firstName + data.lastName,
       'mobile': data.telephone,
@@ -75,4 +80,6 @@ function makeOrder (product_id, sku_id, data) {
       'sub_district_id': data.subDistrict,
       'zipcode_id': data.zipcode
     }))
+    .then((res) => checkout())
+    .then((checkoutRes) => createOrder(checkoutRes.data.checkout_id))
 }
