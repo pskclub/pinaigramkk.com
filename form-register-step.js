@@ -116,11 +116,12 @@ Vue.component('register-step', {
               'sub_district_id': this.form.subDistrict,
               'zipcode_id': this.form.zipcode
             }))
-            .then((res) => {
+            .then((addressRes) => {
               const addressId = addressRes.shipping_address_id
               this.$emit('changeStep', 2)
             })
             .catch(e => {
+              console.log(JSON.stringify(e))
               alert(JSON.stringify(e.response.data))
             })
         } else {
@@ -153,6 +154,7 @@ Vue.component('register-step', {
               this.$emit('changeStep', 2)
             })
             .catch(e => {
+              console.log(JSON.stringify(e))
               alert(JSON.stringify(e.response.data))
             })
         }
