@@ -25,11 +25,40 @@ function register ({ email, password, firstname, lastname, contact_email, contac
     email: email
   }, apiOptions()).then(res => NewRequester.post(`/member/register`, {
     email, password, firstname, lastname, contact_email, contact_mobile
-  },{
-    ... apiOptions(),
+  }, {
+    ...apiOptions(),
     headers: {
-      ... apiOptions().headers,
-      Authorization : res.data.verify_token
-  }
+      ...apiOptions().headers,
+      Authorization: res.data.verify_token
+    }
   }))
 }
+
+function selectProduct (product_id, sku_id) {
+  return NewRequester.post(`/cart/product/add`, {
+    'product_id': product_id,
+    'sku_id': sku_id,
+    'quantity_raw': 1,
+    'unselect_others': true
+  }, apiOptions())
+}
+
+function checkout () {
+  return NewRequester.post(`/checkout`, {}, apiOptions())
+}
+
+function addAddress (data = {}) {
+  return NewRequester.post(`/member/shippingaddress`, {
+    'is_default': true,
+    'is_default_tax': true,
+    'country_id': data.country_id,
+    'name_of_shipping': data.name_of_shipping,
+    'mobile': data.mobile,
+    'address_detail': data.address_detail,
+    'province_id': data.province_id,
+    'district_id': data.district_id,
+    'sub_district_id': data.sub_district_id,
+    'zipcode_id': data.zipcode_id
+  }, apiOptions())
+}
+

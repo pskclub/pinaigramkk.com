@@ -98,31 +98,65 @@ Vue.component('register-step', {
   },
   methods: {
     onSubmit: function () {
-      if (this.isAuth) {
-        this.$emit('changeStep', 2)
-      } else {
-        register({
-          email: this.form.email,
-          password: this.form.password,
-          firstname: this.form.firstName,
-          lastname: this.form.lastName,
-          contact_email: this.form.email,
-          contact_mobile: this.form.telephone
-        }).then((res) => {
-          setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
-          alert('register success')
-          this.$emit('changeStep', 2)
-        }).catch(e => {
-          alert(JSON.stringify(e.response.data))
-        })
-      }
-      // this.$refs.form.validate().then(success => {
-      //   if (!success) {
-      //     return
-      //   }
-      //
-      //
-      // })
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return
+        }
+
+        if (this.isAuth) {
+          selectProduct('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW')
+            .then((res) => checkout())
+            .then((res) => addAddress({
+              'country_id': this.form.country,
+              'name_of_shipping': this.form.firstName + this.form.lastName,
+              'mobile': this.form.telephone,
+              'address_detail': this.form.address,
+              'province_id': this.form.province,
+              'district_id': this.form.district,
+              'sub_district_id': this.form.subDistrict,
+              'zipcode_id': this.form.zipcode
+            }))
+            .then((res) => {
+              const addressId = addressRes.shipping_address_id
+              this.$emit('changeStep', 2)
+            })
+            .catch(e => {
+              alert(JSON.stringify(e.response.data))
+            })
+        } else {
+          register({
+            email: this.form.email,
+            password: this.form.password,
+            firstname: this.form.firstName,
+            lastname: this.form.lastName,
+            contact_email: this.form.email,
+            contact_mobile: this.form.telephone
+          })
+            .then((res) => {
+              setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
+              alert('register success')
+            })
+            .then((res) => selectProduct('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW'))
+            .then((res) => checkout())
+            .then((res) => addAddress({
+              'country_id': this.form.country,
+              'name_of_shipping': this.form.firstName + this.form.lastName,
+              'mobile': this.form.telephone,
+              'address_detail': this.form.address,
+              'province_id': this.form.province,
+              'district_id': this.form.district,
+              'sub_district_id': this.form.subDistrict,
+              'zipcode_id': this.form.zipcode
+            }))
+            .then((addressRes) => {
+              const addressId = addressRes.shipping_address_id
+              this.$emit('changeStep', 2)
+            })
+            .catch(e => {
+              alert(JSON.stringify(e.response.data))
+            })
+        }
+      })
     }
   },
   template: `<div>
@@ -185,8 +219,8 @@ Vue.component('register-step', {
                               rules="required" v-model="form.district"/>
         <select-address-input :parent="form.district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
                               rules="required" v-model="form.subDistrict"/>
-        <text-input-optional className="col-7" type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
-                             rules="required" v-model="form.zipcode"/>
+        <select-address-input :parent="form.subDistrict" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
+                              rules="required" v-model="form.zipcode"/>
         <div class="row justify-content-center">
           <div class="d-flex justify-content-center my-4">
             <button :disabled="invalid" class="btn btn-blue btn-block" type="button" @click="onSubmit">สมัคร</button>
