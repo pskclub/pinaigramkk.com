@@ -7,6 +7,17 @@ Vue.component('payment-step', {
       cvv: ''
     }
   },
+  methods: {
+    onSubmit: function () {
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return
+        }
+
+        this.$emit('submit', this.form)
+      })
+    }
+  },
   template: `<div>
   <form-step-bar :step="2"></form-step-bar>
   <div class="row justify-content-center">
@@ -24,7 +35,7 @@ Vue.component('payment-step', {
 
   <div class="row justify-content-center">
     <div class="d-flex justify-content-center my-4">
-      <button class="btn btn-blue btn-block" type="button" @click="$emit('changeStep',3)">ชำระเงิน</button>
+      <button class="btn btn-blue btn-block" type="button" @click="onSubmit">ชำระเงิน</button>
     </div>
   </div>
 </div>`

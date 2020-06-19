@@ -262,7 +262,8 @@ Vue.component('register-section', {
   data: function () {
     return {
       step: 0,
-      isAuth: false
+      isAuth: false,
+      step1Data: null
     }
   },
   created: function () {
@@ -272,18 +273,20 @@ Vue.component('register-section', {
     setStep (step) {
       this.step = step
     },
+    paymentStepSubmit (form) {
+      this.setStep(3)
+      makeOrder('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW', this.step1Data)
+        .then((addressRes) => {
+          const addressId = addressRes.shipping_address_id
+        })
+        .catch(e => {
+          console.log(JSON.stringify(e))
+          alert(JSON.stringify(e.response.data))
+        })
+    },
     registerStepSubmit (form) {
-      if (this.isAuth) {
-        makeOrder('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW', form)
-          .then((addressRes) => {
-            const addressId = addressRes.shipping_address_id
-            this.$emit('changeStep', 2)
-          })
-          .catch(e => {
-            console.log(JSON.stringify(e))
-            alert(JSON.stringify(e.response.data))
-          })
-      } else {
+      this.step1Data = form
+      if (!this.isAuth) {
         register({
           email: form.email,
           password: form.password,
@@ -295,16 +298,13 @@ Vue.component('register-section', {
           .then((res) => {
             setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
             alert('register success')
-          })
-          .then((res) => makeOrder('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW', form))
-          .then((addressRes) => {
-            const addressId = addressRes.shipping_address_id
             this.$emit('changeStep', 2)
-          })
-          .catch(e => {
-            console.log(JSON.stringify(e))
-            alert(JSON.stringify(e.response.data))
-          })
+          }).catch(e => {
+          console.log(JSON.stringify(e))
+          alert(JSON.stringify(e.response.data))
+        })
+      } else {
+        this.$emit('changeStep', 2)
       }
     }
   },
@@ -315,11 +315,11 @@ Vue.component('register-section', {
     <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
   </div>
   <div v-if="step > 0">
-      <register-step :isAuth="isAuth" @reset="setStep(0)" @submit="registerStepSubmit" v-if="step === 1"></register-step>
-      <payment-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 2"></payment-step>
-      <detail-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 3"></detail-step>
-      <address-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 4"></address-step>
-      <complete-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 5"></complete-step>
+      <register-step :isAuth="isAuth" @reset="setStep(0)" @changeStep="setStep" @submit="registerStepSubmit" v-if="step === 1"></register-step>
+      <payment-step @reset="setStep(0)" @changeStep="setStep" @submit="paymentStepSubmit" v-if="step === 2"></payment-step>
+      <detail-step @reset="setStep(0)" @changeStep="setStep" v-if="step === 3"></detail-step>
+      <address-step @reset="setStep(0)" @changeStep="setStep" v-if="step === 4"></address-step>
+      <complete-step @reset="setStep(0)" @changeStep="setStep" v-if="step === 5"></complete-step>
   </div>
   <div v-else class="row equal p-5">
     <div class="col-md-4 ">
