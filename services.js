@@ -62,3 +62,17 @@ function addAddress (data = {}) {
   }, apiOptions())
 }
 
+function makeOrder (product_id, sku_id, data) {
+  return selectProduct(product_id, sku_id)
+    .then((res) => checkout())
+    .then((res) => addAddress({
+      'country_id': data.country,
+      'name_of_shipping': data.firstName + data.lastName,
+      'mobile': data.telephone,
+      'address_detail': data.address,
+      'province_id': data.province,
+      'district_id': data.district,
+      'sub_district_id': data.subDistrict,
+      'zipcode_id': data.zipcode
+    }))
+}

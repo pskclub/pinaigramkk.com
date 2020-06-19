@@ -262,11 +262,50 @@ Vue.component('register-section', {
   data: function () {
     return {
       step: 0,
+      isAuth: false
     }
+  },
+  created: function () {
+    this.isAuth = isAuth()
   },
   methods: {
     setStep (step) {
       this.step = step
+    },
+    registerStepSubmit (form) {
+      if (this.isAuth) {
+        makeOrder('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW', form)
+          .then((addressRes) => {
+            const addressId = addressRes.shipping_address_id
+            this.$emit('changeStep', 2)
+          })
+          .catch(e => {
+            console.log(JSON.stringify(e))
+            alert(JSON.stringify(e.response.data))
+          })
+      } else {
+        register({
+          email: form.email,
+          password: form.password,
+          firstname: form.firstName,
+          lastname: form.lastName,
+          contact_email: form.email,
+          contact_mobile: form.telephone
+        })
+          .then((res) => {
+            setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
+            alert('register success')
+          })
+          .then((res) => makeOrder('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW', form))
+          .then((addressRes) => {
+            const addressId = addressRes.shipping_address_id
+            this.$emit('changeStep', 2)
+          })
+          .catch(e => {
+            console.log(JSON.stringify(e))
+            alert(JSON.stringify(e.response.data))
+          })
+      }
     }
   },
   template: `<div class="container py-5" id="register">
@@ -276,7 +315,7 @@ Vue.component('register-section', {
     <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
   </div>
   <div v-if="step > 0">
-      <register-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 1"></register-step>
+      <register-step :isAuth="isAuth" @reset="setStep(0)" @submit="registerStepSubmit" v-if="step === 1"></register-step>
       <payment-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 2"></payment-step>
       <detail-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 3"></detail-step>
       <address-step @reset="setStep(0)" @changeStep="setStep"" v-if="step === 4"></address-step>

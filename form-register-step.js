@@ -72,9 +72,14 @@ Vue.component('form-step-bar', {
 })
 
 Vue.component('register-step', {
+  props: {
+    isAuth: {
+      type: Boolean,
+      default: false
+    }
+  },
   data: function () {
     return {
-      isAuth: false,
       form: {
         start_name: '',
         firstName: '',
@@ -93,71 +98,13 @@ Vue.component('register-step', {
       }
     }
   },
-  created: function () {
-    this.isAuth = isAuth()
-  },
   methods: {
     onSubmit: function () {
       this.$refs.form.validate().then(success => {
         if (!success) {
           return
         }
-
-        if (this.isAuth) {
-          selectProduct('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW')
-            .then((res) => checkout())
-            .then((res) => addAddress({
-              'country_id': this.form.country,
-              'name_of_shipping': this.form.firstName + this.form.lastName,
-              'mobile': this.form.telephone,
-              'address_detail': this.form.address,
-              'province_id': this.form.province,
-              'district_id': this.form.district,
-              'sub_district_id': this.form.subDistrict,
-              'zipcode_id': this.form.zipcode
-            }))
-            .then((addressRes) => {
-              const addressId = addressRes.shipping_address_id
-              this.$emit('changeStep', 2)
-            })
-            .catch(e => {
-              console.log(JSON.stringify(e))
-              alert(JSON.stringify(e.response.data))
-            })
-        } else {
-          register({
-            email: this.form.email,
-            password: this.form.password,
-            firstname: this.form.firstName,
-            lastname: this.form.lastName,
-            contact_email: this.form.email,
-            contact_mobile: this.form.telephone
-          })
-            .then((res) => {
-              setCookie('me', encodeURIComponent(JSON.stringify(res.data)))
-              alert('register success')
-            })
-            .then((res) => selectProduct('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW'))
-            .then((res) => checkout())
-            .then((res) => addAddress({
-              'country_id': this.form.country,
-              'name_of_shipping': this.form.firstName + this.form.lastName,
-              'mobile': this.form.telephone,
-              'address_detail': this.form.address,
-              'province_id': this.form.province,
-              'district_id': this.form.district,
-              'sub_district_id': this.form.subDistrict,
-              'zipcode_id': this.form.zipcode
-            }))
-            .then((addressRes) => {
-              const addressId = addressRes.shipping_address_id
-              this.$emit('changeStep', 2)
-            })
-            .catch(e => {
-              console.log(JSON.stringify(e))
-              alert(JSON.stringify(e.response.data))
-            })
-        }
+        this.$emit('submit', this.form)
       })
     }
   },
