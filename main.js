@@ -263,6 +263,8 @@ Vue.component('register-section', {
     return {
       step: 0,
       isAuth: false,
+      productId: '',
+      skuId: '',
       registerStepData: null
     }
   },
@@ -270,12 +272,17 @@ Vue.component('register-section', {
     this.isAuth = isAuth()
   },
   methods: {
+    onSelectProduct (productId, skuId) {
+      this.productId = productId
+      this.skuId = skuId
+      this.setStep(1)
+    },
     setStep (step) {
       this.step = step
     },
     paymentStepSubmit (form) {
       this.setStep(3)
-      makeOrder('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW', this.step1Data)
+      makeOrder(this.productId, this.skuId, this.step1Data)
         .then((addressRes) => {
           const addressId = addressRes.shipping_address_id
         })
@@ -342,7 +349,7 @@ Vue.component('register-section', {
           <div class="text-center d-flex justify-content-end flex-column" style="flex:1">
             <p class="font-weight-bold" style="font-size: 45px;color: #0771FF">7,000 บาท</p>
             <div class="d-flex justify-content-center">
-              <button @click="setStep(1)" class="btn btn-blue btn-block">สมัคร</button>
+              <button @click="onSelectProduct('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW')" class="btn btn-blue btn-block">สมัคร</button>
             </div>
           </div>
         </div>
@@ -366,7 +373,7 @@ Vue.component('register-section', {
           <div class="text-center d-flex justify-content-end flex-column" style="flex:1;">
             <p class="font-weight-bold" style="font-size: 45px;color: #0771FF">20,000 บาท</p>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-blue btn-block">สมัคร</button>
+              <button @click="onSelectProduct('1dROcydNBbFYPzUy143PEKXdrPV', '1dROcrxCLiVP8P5p0uFx8g86H88')" class="btn btn-blue btn-block">สมัคร</button>
             </div>
           </div>
         </div>
@@ -393,7 +400,7 @@ Vue.component('register-section', {
           <div class="text-center d-flex justify-content-end flex-column" style="flex:1;">
             <p class="font-weight-bold" style="font-size: 45px;color: #0771FF">40,000 บาท</p>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-blue btn-block">สมัคร</button>
+              <button @click="onSelectProduct('1dROkNXnyQxuuK7M87AXdBcOJuK', '1dROkLb71QYd49g5Fw4E9uoxDhY')" class="btn btn-blue btn-block">สมัคร</button>
             </div>
           </div>
         </div>

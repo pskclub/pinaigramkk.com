@@ -62,6 +62,23 @@ function addAddress (data = {}) {
   }, apiOptions())
 }
 
+function requestPaymentTokenAsync (options) {
+  return NewRequester.get(`/payment/${options.type}/tokenreq`, apiOptions())
+}
+
+function requestPaymentInfoAsync (options) {
+  return NewRequester.post(`/payment/${options.type}/paymentreq`, options, apiOptions())
+}
+
+function getEGHLCardTokenAsync (url, payload) {
+  const formData = new FormData()
+  for (let [key, value] of Object.entries(payload)) {
+    formData.append(key, value)
+  }
+
+  return NewRequester.post(url, formData)
+}
+
 function createOrder (checkout_id) {
   return NewRequester.post(`/order/create`, {
     'checkout_id': checkout_id
