@@ -1,4 +1,5 @@
 let BASE_API = 'https://pinaigumkk-ecom.pams.ai/api'
+let BASE_URL = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '')
 
 function apiOptions () {
   return {
@@ -62,30 +63,31 @@ function addAddress (data = {}) {
   }, apiOptions())
 }
 
-function requestPaymentTokenAsync (options) {
-  return NewRequester.get(`/payment/${options.type}/tokenreq`, apiOptions())
-}
-
-function requestPaymentInfoAsync (options) {
-  return NewRequester.post(`/payment/${options.type}/paymentreq`, options, apiOptions())
-}
-
-function getEGHLCardTokenAsync (url, payload) {
-  const formData = new FormData()
-  for (let [key, value] of Object.entries(payload)) {
-    formData.append(key, value)
-  }
-
-  return NewRequester.post(url, formData)
-}
-
 function createOrder (checkout_id) {
   return NewRequester.post(`/order/create`, {
     'checkout_id': checkout_id
   }, apiOptions())
 }
 
-function makeOrder (product_id, sku_id, data) {
+function createForm (alias, data) {
+  return NewRequester.post(`/member/application-form`, {
+    'alias': alias,
+    'forms': data
+  }, apiOptions())
+}
+
+function makeOrder (product_id, sku_id, data, paymentData) {
+  paymentData = {
+    type: 'eghl',
+    card: {
+      ...paymentData,
+      is_save: false,
+      is_primary: false
+    }
+  }
+
+  let paymentRes
+  let orderRes
   return selectProduct(product_id, sku_id)
     .then(() => addAddress({
       'country_id': data.country,
@@ -99,4 +101,13 @@ function makeOrder (product_id, sku_id, data) {
     }))
     .then((res) => checkout())
     .then((checkoutRes) => createOrder(checkoutRes.data.checkout_id))
+    .then((res) => {
+      orderRes = res
+      return execPayment(orderRes.data.order_id, paymentData)
+    })
+    .then((res) => {
+      paymentRes = res
+      return createForm(orderRes.data.order_id, data)
+    })
+    .then((res) => postGHL(paymentRes))
 }

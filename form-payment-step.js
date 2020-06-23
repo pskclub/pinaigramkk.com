@@ -1,10 +1,12 @@
 Vue.component('payment-step', {
   data: function () {
     return {
-      card_number: '',
-      card_name: '',
-      exp: '',
-      cvv: ''
+      form: {
+        number: '',
+        holder: '',
+        exp: '',
+        cvv: ''
+      }
     }
   },
   methods: {
@@ -24,11 +26,11 @@ Vue.component('payment-step', {
     <div class="col-md-8">
       <div class="border p-5">
         <text-input-optional name="หมายเลขบัตร" placeholder="0000 0000 0000 0000" rules="required"
-                             v-model="card_number"/>
+                             v-model="form.number"/>
         <text-input-optional name="ชื่อที่ปรากฎบนบัตร" placeholder="กรอกชื่อบนบัตรเครดิต/เดบิต" rules="required"
-                             v-model="card_name"/>
-        <text-input-optional name="วันหมดอายุ" placeholder="MM/YY" rules="required" v-model="exp"/>
-        <text-input-optional name="CVV" placeholder="000" rules="required" v-model="cvv"/>
+                             v-model="form.holder"/>
+        <text-input-optional name="วันหมดอายุ" placeholder="MM/YY" rules="required" v-model="form.exp"/>
+        <text-input-optional name="CVV" placeholder="000" rules="required" v-model="form.cvv"/>
       </div>
     </div>
   </div>

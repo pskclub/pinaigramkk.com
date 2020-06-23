@@ -281,10 +281,9 @@ Vue.component('register-section', {
       this.step = step
     },
     paymentStepSubmit (form) {
-      this.setStep(3)
-      makeOrder(this.productId, this.skuId, this.step1Data)
-        .then((addressRes) => {
-          const addressId = addressRes.shipping_address_id
+      makeOrder(this.productId, this.skuId, this.registerStepData, form)
+        .then(() => {
+          this.setStep(3)
         })
         .catch(e => {
           console.log(JSON.stringify(e))
