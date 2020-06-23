@@ -30,7 +30,7 @@ Vue.component('header-section', {
 
 Vue.component('navbar-section', {
   template: `
-  <div class="bg-white">
+  <div class="bg-white shadow-sm">
     <ul class="nav container nav-text">
       <li class="nav-item">
         <a class="nav-link active" href="#home">หน้าแรก</a>
@@ -275,6 +275,7 @@ Vue.component('register-section', {
     onSelectProduct (productId, skuId) {
       this.productId = productId
       this.skuId = skuId
+      this.$emit('next')
       this.setStep(1)
     },
     setStep (step) {
@@ -315,11 +316,14 @@ Vue.component('register-section', {
     }
   },
   template: `<div class="container py-5" id="register">
+<div v-if="step === 0">
   <h1 class="text-info text-center">สมัครวันนี้ฟรีสัมมนา</h1>
   <div class="text-center mt-5" style="color:#525553;">
     <p class="mb-0" style="font-size: 24px"><b>ในวันที่ 25 กุมภาพันธ์ 2563</b></p>
     <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
   </div>
+</div>
+
   <div v-if="step > 0">
       <register-step :isAuth="isAuth" @reset="setStep(0)" @changeStep="setStep" @submit="registerStepSubmit" v-if="step === 1"></register-step>
       <payment-step @reset="setStep(0)" @changeStep="setStep" @submit="paymentStepSubmit" v-if="step === 2"></payment-step>
@@ -628,7 +632,27 @@ Vue.component('footer-section', {
 </div>
   `
 })
-
+Vue.component('main-section', {
+  data: function () {
+    return {
+      state: 0
+    }
+  },
+  template: `<div>
+  <header-section/>
+    <navbar-section/>
+    <slide-show-section v-if="state === 0"/>
+    <customer-section v-if="state === 0"/>
+    <howto-section v-if="state === 0"/>
+    <tanai-section v-if="state === 0"/>
+    <register-section @next="()=> state = 1"/>
+    <kkgroup-section v-if="state === 0"/>
+    <safe-section v-if="state === 0"/>
+    <map-section v-if="state === 0"/>
+   <footer-section/>
+</div>
+  `
+})
 var app = new Vue({
   el: '#main',
   data: {
