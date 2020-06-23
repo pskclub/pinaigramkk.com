@@ -259,6 +259,12 @@ Vue.component('tanai-section', {
 })
 
 Vue.component('register-section', {
+  props: {
+    fromStep: {
+      type: Number,
+      default: 0
+    }
+  },
   data: function () {
     return {
       step: 0,
@@ -269,6 +275,7 @@ Vue.component('register-section', {
     }
   },
   created: function () {
+    this.step = this.fromStep
     this.isAuth = isAuth()
   },
   methods: {
@@ -649,6 +656,21 @@ Vue.component('main-section', {
     <kkgroup-section v-if="state === 0"/>
     <safe-section v-if="state === 0"/>
     <map-section v-if="state === 0"/>
+   <footer-section/>
+</div>
+  `
+})
+
+Vue.component('main-order-complete-section', {
+  data: function () {
+    return {
+      state: 0
+    }
+  },
+  template: `<div>
+  <header-section/>
+    <navbar-section/>
+    <register-section @next="()=> state = 1" :fromStep="3"/>
    <footer-section/>
 </div>
   `
