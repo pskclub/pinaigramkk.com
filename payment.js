@@ -126,7 +126,7 @@ async function execPayment (orderId, payload) {
     res = {
       order_id: orderId,
       ...payload,
-      payment_info: paymentInfoeghl
+      payment_info: paymentInfo
     }
 
   } catch (e) {
