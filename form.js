@@ -96,10 +96,10 @@ Vue.component('start-name-input', {
       return this.currentValue !== 'นาย' && this.currentValue !== 'นาง' && this.currentValue !== 'นางสาว'
     }
   },
-  template: `<ValidationProvider :name="name" rules="required" v-slot="{ errors }">
+  template: `<ValidationProvider :name="name" :rules="rules" v-slot="{ errors }">
   <div class="row form-group">
     <div class="col-3 d-flex align-items-center justify-content-end">
-      <span class="text-danger" style="font-weight: bold">*</span> <span
+      <span class="text-danger" v-if="rules.search('required') !== -1" style="font-weight: bold">*</span> <span
       style="font-weight: bold">คำนำหน้าชื่อ:</span>
     </div>
     <div class="col-9 d-flex align-items-center justify-content-start">
@@ -208,11 +208,11 @@ Vue.component('manager-options-input', {
       return this.currentValue !== 'คู่สมรส' && this.currentValue !== 'บุตร'
     }
   },
-  template: `<ValidationProvider :name="name" rules="required" v-slot="{ errors }">
+  template: `<ValidationProvider :name="name" :rules="rules" v-slot="{ errors }">
   <div class="row form-group">
     <div class="col-3 d-flex align-items-center justify-content-end">
-      <span class="text-danger" style="font-weight: bold">*</span> <span
-      style="font-weight: bold">ผู้จัดการมรดกคนที่ {{index}} :</span>
+      <span class="text-danger" v-if="rules.search('required') !== -1" style="font-weight: bold">*</span> <span
+      style="font-weight: bold;font-size: 14px">{{name}} :</span>
     </div>
     <div class="col-9 d-flex align-items-center justify-content-start">
       <manager-options-input-field :errors="errors" v-model="currentValue" v-bind="$props"/>
@@ -254,7 +254,7 @@ Vue.component('text-input', {
       this.$emit('input', val)
     }
   },
-  template: `<ValidationProvider :name="name" :vid="vid" rules="required" v-slot="{ errors }">
+  template: `<ValidationProvider :name="name" :vid="vid" :rules="rules" v-slot="{ errors }">
   <div class="form-group">
     <label>{{name}}</label>
     <input :type="type" v-model="currentValue" :class="{ 'form-control' :true, 'is-invalid': errors[0]}">
@@ -303,11 +303,11 @@ Vue.component('text-area-input', {
       this.$emit('input', val)
     }
   },
-  template: `<ValidationProvider :name="name" :vid="vid" rules="required" v-slot="{ errors }">
+  template: `<ValidationProvider :name="name" :vid="vid" :rules="rules" v-slot="{ errors }">
   <div class="row form-group">
     <div class="col-3 d-flex flex-column align-items-end">
       <div>
-        <span class="text-danger" style="font-weight: bold">*</span> <span
+        <span class="text-danger" v-if="rules.search('required') !== -1" style="font-weight: bold">*</span> <span
         style="font-weight: bold; font-size: 14px">{{name}}:</span>
       </div>
       <span class="text-muted" v-if="desc" style="font-size: 14px">{{desc}}</span>
@@ -315,6 +315,70 @@ Vue.component('text-area-input', {
     <div class="col-9">
     <textarea :class="{ 'form-control w-100' :true, 'is-invalid': errors[0]}" :placeholder="placeholder"
               v-model="currentValue"></textarea>
+      <div class="invalid-feedback">
+        {{ errors[0] }}
+      </div>
+    </div>
+  </div>
+</ValidationProvider>
+  `
+})
+
+Vue.component('select-input', {
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    desc: {
+      type: String,
+      default: ''
+    },
+
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    options: {
+      type: Array,
+      default: () => ([])
+    },
+    vid: {
+      type: String,
+      default: undefined
+    }
+  },
+  data: () => ({
+    currentValue: ''
+  }),
+  watch: {
+    currentValue (val) {
+      // allows us to use v-model on our input.
+      this.$emit('input', val)
+    }
+  },
+  template: `<ValidationProvider :name="name" :vid="vid" :rules="rules" v-slot="{ errors }">
+  <div class="row form-group">
+    <div class="col-3 d-flex flex-column align-items-end">
+      <div>
+        <span class="text-danger" v-if="rules.search('required') !== -1" style="font-weight: bold">*</span> <span
+        style="font-weight: bold; font-size: 14px">{{name}}:</span>
+      </div>
+      <span class="text-muted" v-if="desc" style="font-size: 14px">{{desc}}</span>
+    </div>
+    <div class="col-9">
+     <select  v-model="currentValue" class="custom-select" :class="{ 'form-control w-100' :true, 'is-invalid': errors[0]}" :placeholder="placeholder">
+        <option :selected="!currentValue" disabled value="">{{placeholder}}</option>
+        <option :selected="currentValue === option.value" v-for="option in options" :key="option.value">{{option.label}}</option>
+      </select>
       <div class="invalid-feedback">
         {{ errors[0] }}
       </div>
@@ -363,7 +427,7 @@ Vue.component('text-input-optional', {
   template: `<ValidationProvider :vid="vid || name" :name="name" :rules="rules" v-slot="{ errors }">
   <div class="row form-group">
     <div class="col-3 d-flex align-items-center justify-content-end text-right">
-      <span class="text-danger" style="font-weight: bold">*</span> <span
+      <span class="text-danger" v-if="rules.search('required') !== -1" style="font-weight: bold">*</span> <span
       style="font-weight: bold; font-size: 14px">{{name}}:</span>
     </div>
     <div class="col-9">
@@ -495,10 +559,10 @@ Vue.component('upload-image-input', {
       this.$emit('input', val)
     }
   },
-  template: `<ValidationProvider :name="name" rules="required" v-slot="{ errors }">
+  template: `<ValidationProvider :name="name" :rules="rules" v-slot="{ errors }">
   <div class="row form-group">
     <div class="col-3 d-flex align-items-center justify-content-end text-right">
-      <span class="text-danger" style="font-weight: bold">*</span> <span
+      <span class="text-danger" v-if="rules.search('required') !== -1" style="font-weight: bold">*</span> <span
       style="font-weight: bold; font-size: 14px">{{name}}:</span>
     </div>
     <div class="col-9">
@@ -567,10 +631,10 @@ Vue.component('select-address-input', {
       }
     }
   },
-  template: `<ValidationProvider :name="name" :vid="vid" rules="required" v-slot="{ errors }">
+  template: `<ValidationProvider :name="name" :vid="vid" :rules="rules" v-slot="{ errors }">
   <div class="row form-group">
     <div class="col-3 d-flex align-items-center justify-content-end">
-      <span class="text-danger" style="font-weight: bold">*</span> <span
+      <span class="text-danger" v-if="rules.search('required') !== -1" style="font-weight: bold">*</span> <span
       style="font-weight: bold; font-size: 14px">{{name}}:</span>
     </div>
     <div class="col-9 d-flex">

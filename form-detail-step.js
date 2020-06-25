@@ -16,6 +16,9 @@ Vue.component('detail-step-1', {
         firstName: '',
         lastName: '',
         personID: '',
+        personIDPic: '',
+        telephone: '',
+        email: '',
         address: '',
         province: '',
         district: '',
@@ -34,28 +37,28 @@ Vue.component('detail-step-1', {
   <div class="row justify-content-center">
     <div class="col-10">
       <manager-options-input name="ผู้จัดการมรดก" :index="index" rules="required" v-model="form.manager"/>
-      <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="form.start_name"/>
+      <start-name-input name="คำนำหน้าชื่อ" rules="" v-model="form.start_name"/>
       <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required"
                            v-model="form.firstName"/>
       <text-input-optional type="text" name="นามสกุล" v-model="form.lastName" placeholder="นามสกุล (ภาษาไทย)"
                            rules="required"/>
       <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                           rules="required|numeric|length:13" v-model="form.personID"/>
+                           rules="numeric|length:13" v-model="form.personID"/>
       <upload-image-input name="สำเนาบัตรประชาชน" placeholder="กรอกที่อยู่"
-                          rules="required" v-model="form.address"/>
-      <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required|numeric"
+                          rules="" v-model="form.personIDPic"/>
+      <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="numeric"
                            v-model="form.telephone"/>
-      <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required|email"/>
+      <text-input-optional type="text" name="อีเมล" v-model="form.email" placeholder="กรอกอีเมล" rules="email"/>
       <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
-                       rules="required" v-model="form.address"/>
+                       rules="" v-model="form.address"/>
       <select-address-input :parent="form.country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"
-                            rules="required" v-model="form.province"/>
+                            rules="" v-model="form.province"/>
       <select-address-input :parent="form.province" name="อำเภอ/เขต" placeholder="กรุณาเลือกอำเภอ/เขต"
-                            rules="required" v-model="form.district"/>
+                            rules="" v-model="form.district"/>
       <select-address-input :parent="form.district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
-                            rules="required" v-model="form.subDistrict"/>
+                            rules="" v-model="form.subDistrict"/>
       <text-input-optional type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
-                           rules="required" v-model="form.zipcode"/>
+                           rules="" v-model="form.zipcode"/>
     </div>
   </div>
 </div>
@@ -70,29 +73,49 @@ Vue.component('detail-step-2', {
   },
   data: function () {
     return {
+      relationOptions: [
+        {
+          value: '100%',
+          label: '100%'
+        },
+        {
+          value: '95%',
+          label: '95%'
+        },
+        {
+          value: '90%',
+          label: '90%'
+        },
+        {
+          value: '85%',
+          label: '85%'
+        },
+        {
+          value: '80%',
+          label: '80%'
+        }
+      ],
       form: {
-        start_name: '',
         firstName: '',
         lastName: '',
         personID: '',
-        address: '',
-        province: '',
-        district: '',
-        subDistrict: '',
-        zipcode: ''
+        personIDPic: '',
+        relation: ''
       }
     }
   },
   template: `<div class="border rounded py-4 px-3 mb-4">
   <p>{{index}}.ชื่อ-นามสกุล ทายาทหรือผู้รับมรดก</p>
-  <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="firstName"/>
-  <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"/>
+  <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="form.firstName"/>
+  <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" v-model="form.lastName"
+                       rules="required"/>
   <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                       rules="required|numeric|length:13" v-model="personID"/>
-  <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required|numeric"
-                       v-model="telephone"/>
-  <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required|email"/>
-</div>
+                       rules="numeric|length:13" v-model="form.personID"/>
+  <upload-image-input name="สำเนาบัตรประชาชน" placeholder="กรอกที่อยู่"
+                      rules="" v-model="form.personIDPic"/>
+  <manager-options-input name="ความสัมพันธ์ต่อผู้ทำพินัยกรรม" rules="required" v-model="form.relation"/>
+  <select-input placeholder="เลือกจำนวนสัดส่วน" :options="relationOptions" name="ส่วนแบ่ง" v-model="form.relation"/>
+  </div>
   `
 })
 
@@ -101,8 +124,36 @@ Vue.component('detail-step', {
     return {
       isShowPreview: false,
       form: {
-        owner: '',
-        owner2: '',
+        owner: {
+          manager: '',
+          start_name: '',
+          firstName: '',
+          lastName: '',
+          personID: '',
+          personIDPic: '',
+          telephone: '',
+          email: '',
+          address: '',
+          province: '',
+          district: '',
+          subDistrict: '',
+          zipcode: ''
+        },
+        owner2: {
+          manager: '',
+          start_name: '',
+          firstName: '',
+          lastName: '',
+          personID: '',
+          personIDPic: '',
+          telephone: '',
+          email: '',
+          address: '',
+          province: '',
+          district: '',
+          subDistrict: '',
+          zipcode: ''
+        },
         children: [{}]
       }
     }
@@ -128,10 +179,10 @@ Vue.component('detail-step', {
       <h5 class="mb-0">การแต่งตั้งผู้จัดการมรดก</h5>
     </div>
     <detail-step-1
-      index="1"
+      :index="1"
       msg="ผู้จัดการมรดก ต้องมีอายุไม่ต่ำกว่า 20 ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ, ไม่เป็นผู้ไร้ความสามารถ และต้องไม่เป็นบุคคลล้มละลาย"/>
     <detail-step-1
-      index="2"
+      :index="2"
       msg="หากผู้จัดการมรดกคนที่ 1 ของข้าฯ ถึงแก่กรรมก่อน หรือไม่ยอมรับ หรือไม่มีความสามารถ ข้าฯ ขอแต่งตั้งผู้จัดการมรดกคนที่ 2 (แทนที่)"/>
 
     <div class="mb-4  mt-5" style="padding: 10px 15px;

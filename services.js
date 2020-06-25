@@ -76,6 +76,10 @@ function createForm (alias, data) {
   }, apiOptions())
 }
 
+function getForm (alias) {
+  return NewRequester.get(`/member/application-form?alias=${alias}`, apiOptions())
+}
+
 function makeOrder (product_id, sku_id, data, paymentData) {
   paymentData = {
     type: 'eghl',
