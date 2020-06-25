@@ -8,6 +8,16 @@ Vue.component('detail-step-1', {
       default: 1
     }
   },
+  watch: {
+    form: {
+      deep: true,
+      immediate: true,
+      handler (val) {
+        // allows us to use v-model on our input.
+        this.$emit('input', val)
+      }
+    }
+  },
   data: function () {
     return {
       form: {
@@ -29,19 +39,20 @@ Vue.component('detail-step-1', {
   },
   template: `<div>
   <div class="px-5 py-4 text-center">
-  <span class="text-danger" style="font-weight: bold;">*</span>
+    <span class="text-danger" style="font-weight: bold;">*</span>
     <span style="color: rgb(7, 113, 255); font-weight: bold;">
    {{msg}} 
     </span>
   </div>
   <div class="row justify-content-center">
     <div class="col-10">
-      <manager-options-input name="ผู้จัดการมรดก" :index="index" rules="required" v-model="form.manager"/>
+      <manager-options-input name="ผู้จัดการมรดก" :index="index" :rules="index === 1? 'required':''"
+                             v-model="form.manager"/>
       <start-name-input name="คำนำหน้าชื่อ" rules="" v-model="form.start_name"/>
-      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required"
+      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" :rules="index === 1? 'required':''"
                            v-model="form.firstName"/>
       <text-input-optional type="text" name="นามสกุล" v-model="form.lastName" placeholder="นามสกุล (ภาษาไทย)"
-                           rules="required"/>
+                           :rules="index === 1? 'required':''"/>
       <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
                            rules="numeric|length:13" v-model="form.personID"/>
       <upload-image-input name="สำเนาบัตรประชาชน" placeholder="กรอกที่อยู่"
@@ -69,6 +80,16 @@ Vue.component('detail-step-2', {
   props: {
     index: {
       type: Number
+    }
+  },
+  watch: {
+    form: {
+      deep: true,
+      immediate: true,
+      handler (val) {
+        // allows us to use v-model on our input.
+        this.$emit('input', val)
+      }
     }
   },
   data: function () {
@@ -115,7 +136,7 @@ Vue.component('detail-step-2', {
                       rules="" v-model="form.personIDPic"/>
   <manager-options-input name="ความสัมพันธ์ต่อผู้ทำพินัยกรรม" rules="required" v-model="form.relation"/>
   <select-input placeholder="เลือกจำนวนสัดส่วน" :options="relationOptions" name="ส่วนแบ่ง" v-model="form.relation"/>
-  </div>
+</div>
   `
 })
 
@@ -124,36 +145,8 @@ Vue.component('detail-step', {
     return {
       isShowPreview: false,
       form: {
-        owner: {
-          manager: '',
-          start_name: '',
-          firstName: '',
-          lastName: '',
-          personID: '',
-          personIDPic: '',
-          telephone: '',
-          email: '',
-          address: '',
-          province: '',
-          district: '',
-          subDistrict: '',
-          zipcode: ''
-        },
-        owner2: {
-          manager: '',
-          start_name: '',
-          firstName: '',
-          lastName: '',
-          personID: '',
-          personIDPic: '',
-          telephone: '',
-          email: '',
-          address: '',
-          province: '',
-          district: '',
-          subDistrict: '',
-          zipcode: ''
-        },
+        owner: {},
+        owner2: {},
         children: [{}]
       }
     }
@@ -180,9 +173,11 @@ Vue.component('detail-step', {
     </div>
     <detail-step-1
       :index="1"
+      v-model="form.owner"
       msg="ผู้จัดการมรดก ต้องมีอายุไม่ต่ำกว่า 20 ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ, ไม่เป็นผู้ไร้ความสามารถ และต้องไม่เป็นบุคคลล้มละลาย"/>
     <detail-step-1
       :index="2"
+      v-model="form.owner2"
       msg="หากผู้จัดการมรดกคนที่ 1 ของข้าฯ ถึงแก่กรรมก่อน หรือไม่ยอมรับ หรือไม่มีความสามารถ ข้าฯ ขอแต่งตั้งผู้จัดการมรดกคนที่ 2 (แทนที่)"/>
 
     <div class="mb-4  mt-5" style="padding: 10px 15px;
@@ -195,7 +190,7 @@ Vue.component('detail-step', {
   ผู้รับพินัยกรรม
     </span>
     </div>
-    <detail-step-2 :key="index" :index="index+1" v-for="(child,index) in form.children"/>
+    <detail-step-2  v-model="form.children[index]" :key="index" :index="index+1" v-for="(child,index) in form.children"/>
     <button class="btn btn-primary" type="button" @click="addChild">เพิ่มทายาทหรือผู้รับมรดก</button>
     <div class="row justify-content-center  border-top mt-4">
       <div class="d-flex justify-content-center my-4">
