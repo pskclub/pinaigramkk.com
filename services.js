@@ -110,7 +110,7 @@ function makeOrder (product_id, sku_id, data, paymentData) {
     .then((checkoutRes) => createOrder(checkoutRes.data.checkout_id))
     .then((res) => {
       orderRes = res
-      return execPayment(orderRes.data.order_id, paymentData)
+      return execPayment(orderRes.data.order_id, sku_id, paymentData)
     })
     .then((res) => {
       paymentRes = res

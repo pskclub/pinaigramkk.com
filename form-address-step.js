@@ -1,4 +1,10 @@
 Vue.component('address-step', {
+  props: {
+    skuId: {
+      type: String,
+      default: ''
+    }
+  },
   data: function () {
     return {
       form: {
@@ -16,6 +22,7 @@ Vue.component('address-step', {
     }
   },
   template: `<div>
+  <step-header :skuId="skuId"/>
   <form-step-bar :step="4"></form-step-bar>
   <div class="mb-4  mt-5" style="padding: 10px 15px;
     background-color: rgb(248, 222, 25);

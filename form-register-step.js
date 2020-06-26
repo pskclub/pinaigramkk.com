@@ -71,11 +71,52 @@ Vue.component('form-step-bar', {
     `
 })
 
+Vue.component('step-header', {
+  props: {
+    skuId: {
+      type: String,
+      default: ''
+    }
+  },
+  data: function () {
+    return {
+      product: products[this.skuId]
+    }
+  },
+  template: `
+  <div class="row justify-content-center p-4">
+    <div class="col-auto">
+      <img style="height: 100px"
+           src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Yc6LIpv5eSeQcMnWVpHOGghgvp.jpg">
+    </div>
+    <div class="col-6">
+      <div>
+        <h2>{{product.title}}</h2>
+      </div>
+      <div class="pl-4">
+        <ul class="p-0" style="font-size: 20px; color:#525553;">
+          <li v-for="item in product.detail" :key="item">{{item}}</li>
+        </ul>
+      </div>
+      <div class="pl-4">
+        <h2 style="color: #0771FF;">{{product.price}} บาท</h2>
+      </div>
+    </div>
+    <div class="col-auto">
+      <a href="/">ดูแพ็คเกจอื่น</a>
+    </div>
+  </div>
+  `
+})
 Vue.component('register-step', {
   props: {
     isAuth: {
       type: Boolean,
       default: false
+    },
+    skuId: {
+      type: String,
+      default: ''
     }
   },
   data: function () {
@@ -109,29 +150,7 @@ Vue.component('register-step', {
     }
   },
   template: `<div>
-  <div class="row justify-content-center p-4">
-    <div class="col-auto">
-      <img style="height: 100px"
-           src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Yc6LIpv5eSeQcMnWVpHOGghgvp.jpg">
-    </div>
-    <div class="col-6">
-      <div>
-        <h2>Easy Will</h2>
-      </div>
-      <div class="pl-4">
-        <ul class="p-0" style="font-size: 20px; color:#525553;">
-          <li>ร่างพินัยกรรมโดยกำหนดสัดส่วนการรับมรดก และส่งให้ถึงมือคุณ</li>
-          <li>มีผลถูกต้องใช้บังคับได้ตามกฏหมาย</li>
-        </ul>
-      </div>
-      <div class="pl-4">
-        <h2 style="color: #0771FF;">7,000 บาท</h2>
-      </div>
-    </div>
-    <div class="col-auto">
-      <a href="#" @click.prevent="$emit('reset')">ดูแพ็คเกจอื่น</a>
-    </div>
-  </div>
+  <step-header :skuId="skuId"/>
   <hr>
   <form-step-bar></form-step-bar>
   <login-form v-if="!isAuth"></login-form>

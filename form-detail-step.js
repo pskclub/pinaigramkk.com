@@ -149,6 +149,7 @@ Vue.component('detail-step-2', {
 Vue.component('detail-step', {
   data: function () {
     return {
+      skuId: qs['skuId'],
       isShowPreview: false,
       form: {
         owner: {},
@@ -188,6 +189,8 @@ Vue.component('detail-step', {
     }
   },
   template: `<div>
+  <step-header :skuId="skuId"/>
+  <hr>
   <form-step-bar :step="3"></form-step-bar>
   <preview-step :detailData="form" v-if="isShowPreview" @submit="onSubmit" @changeStep="$emit('changeStep',$event)" @back="isShowPreview = false"/>
   <ValidationObserver v-show="!isShowPreview" v-slot="{ invalid }" ref="form">

@@ -270,7 +270,7 @@ Vue.component('register-section', {
       step: 0,
       isAuth: false,
       productId: '',
-      skuId: '',
+      skuId: qs['skuId'],
       registerStepData: null
     }
   },
@@ -344,11 +344,11 @@ Vue.component('register-section', {
 </div>
 
   <div v-if="step > 0">
-      <register-step :isAuth="isAuth" @reset="setStep(0)" @changeStep="setStep" @submit="registerStepSubmit" v-if="step === 1"></register-step>
-      <payment-step @reset="setStep(0)" @changeStep="setStep" @submit="paymentStepSubmit" v-if="step === 2"></payment-step>
-      <detail-step @reset="setStep(0)" @changeStep="setStep" @submit="detailStepSubmit" v-if="step === 3"></detail-step>
-      <address-step @reset="setStep(0)" @changeStep="setStep" @submit="addressStepSubmit" v-if="step === 4"></address-step>
-      <complete-step @reset="setStep(0)" @changeStep="setStep" v-if="step === 5"></complete-step>
+      <register-step :skuId="skuId" :isAuth="isAuth" @reset="setStep(0)" @changeStep="setStep" @submit="registerStepSubmit" v-if="step === 1"></register-step>
+      <payment-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="paymentStepSubmit" v-if="step === 2"></payment-step>
+      <detail-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="detailStepSubmit" v-if="step === 3"></detail-step>
+      <address-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="addressStepSubmit" v-if="step === 4"></address-step>
+      <complete-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" v-if="step === 5"></complete-step>
   </div>
   <div v-else class="row equal p-5">
     <div class="col-md-4 ">

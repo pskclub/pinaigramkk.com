@@ -1,4 +1,10 @@
 Vue.component('payment-step', {
+  props: {
+    skuId: {
+      type: String,
+      default: ''
+    }
+  },
   data: function () {
     return {
       form: {
@@ -21,6 +27,7 @@ Vue.component('payment-step', {
     }
   },
   template: `<ValidationObserver v-slot="{ invalid }" ref="form">
+ <step-header :skuId="skuId"/>
   <form-step-bar :step="2"></form-step-bar>
   <div class="row justify-content-center">
     <div class="col-md-8">
