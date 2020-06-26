@@ -126,7 +126,12 @@ Vue.component('detail-step-2', {
     }
   },
   template: `<div class="border rounded py-4 px-3 mb-4">
-  <p>{{index}}.ชื่อ-นามสกุล ทายาทหรือผู้รับมรดก</p>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <p>{{index+1}}.ชื่อ-นามสกุล ทายาทหรือผู้รับมรดก</p>
+    <div v-if="index !== 0">
+      <button class="btn btn-primary" type="button" @click="$emit('delete',index)">ลบ</button>
+    </div>
+  </div>
   <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="form.firstName"/>
   <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" v-model="form.lastName"
                        rules="required"/>
@@ -160,6 +165,14 @@ Vue.component('detail-step', {
           {}
         ]
       }
+    },
+    deleteChild: function (index) {
+      console.log('1111', index)
+      this.form = {
+        ...this.form,
+        children: [this.form.children.filter((item, i) => i !== index)]
+      }
+
     }
   },
   template: `<div>
@@ -190,7 +203,7 @@ Vue.component('detail-step', {
   ผู้รับพินัยกรรม
     </span>
     </div>
-    <detail-step-2  v-model="form.children[index]" :key="index" :index="index+1" v-for="(child,index) in form.children"/>
+    <detail-step-2  v-model="form.children[index]" :key="index" :index="index" v-for="(child,index) in form.children" @delete="deleteChild"/>
     <button class="btn btn-primary" type="button" @click="addChild">เพิ่มทายาทหรือผู้รับมรดก</button>
     <div class="row justify-content-center  border-top mt-4">
       <div class="d-flex justify-content-center my-4">
