@@ -271,7 +271,8 @@ Vue.component('register-section', {
       isAuth: false,
       productId: '',
       skuId: qs['skuId'],
-      registerStepData: null
+      registerStepData: null,
+      addressStepData: null
     }
   },
   created: function () {
@@ -326,6 +327,7 @@ Vue.component('register-section', {
       })
     },
     addressStepSubmit (form) {
+      this.addressStepData = form
       createForm(qs['id'] + 'address', form, qs['id'] + 'address').then(() => {
         this.setStep(5)
       }).catch(e => {
@@ -348,7 +350,7 @@ Vue.component('register-section', {
       <payment-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="paymentStepSubmit" v-if="step === 2"></payment-step>
       <detail-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="detailStepSubmit" v-if="step === 3"></detail-step>
       <address-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="addressStepSubmit" v-if="step === 4"></address-step>
-      <complete-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" v-if="step === 5"></complete-step>
+      <complete-step :addressStepData="addressStepData" :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" v-if="step === 5"></complete-step>
   </div>
   <div v-else class="row equal p-5">
     <div class="col-md-4 ">
