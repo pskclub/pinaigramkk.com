@@ -82,30 +82,32 @@ Vue.component('preview-step', {
     <preview-step-line title="คำนำหน้าชื่อ" :desc="detailData.owner.start_name"/>
     <preview-step-line title="ชื่อ" :desc="detailData.owner.firstName"/>
     <preview-step-line title="นามสกุล" :desc="detailData.owner.lastName"/>
+    <preview-step-line title="เลขบัตรประจำตัวประชาชน" :desc="detailData.owner.personID"/>
+    <preview-step-line title="สำเนาประจำตัวประชาชน" :desc="detailData.owner.personIDPic"/>
     <preview-step-line title="เบอร์โทรศัพท์" :desc="detailData.owner.telephone"/>
     <preview-step-line title="อีเมล" :desc="detailData.owner.email"/>
-    <preview-step-line title="เลขบัตรประจำตัวประชาชน" :desc="detailData.owner.personID"/>
     <preview-step-line title="ที่อยู่" :desc="detailData.owner.address"/>
   </div>
-  <div v-if="detailData.owner.firstName" class="mt-5">
+  <div v-if="detailData.owner2.firstName" class="mt-5">
     <preview-step-line title="ผู้จัดการมรดกคนที่ 2" :desc="detailData.owner2.manager"/>
     <preview-step-line title="คำนำหน้าชื่อ" :desc="detailData.owner2.start_name"/>
     <preview-step-line title="ชื่อ" :desc="detailData.owner2.firstName"/>
     <preview-step-line title="นามสกุล" :desc="detailData.owner2.lastName"/>
+    <preview-step-line title="เลขบัตรประจำตัวประชาชน" :desc="detailData.owner2.personID"/>
+    <preview-step-line title="สำเนาประจำตัวประชาชน" :desc="detailData.owner2.personIDPic"/>
     <preview-step-line title="เบอร์โทรศัพท์" :desc="detailData.owner2.telephone"/>
     <preview-step-line title="อีเมล" :desc="detailData.owner2.email"/>
-    <preview-step-line title="เลขบัตรประจำตัวประชาชน" :desc="detailData.owner2.personID"/>
     <preview-step-line title="ที่อยู่" :desc="detailData.owner2.address"/>
   </div>
   <preview-bar msg="ทรัพย์มรดกทั้งหมดยกให้แก่"
                msg2="ผู้รับพินัยกรรม"/>
-  <div v-for="(item,index) in detailData.children" :key="index">
+  <div v-for="(item,index) in detailData.children" :key="index" v-if="item.firstName">
     <p><b>{{index+1}}.{{item.firstName}} {{item.lastName}}</b></p>
     <preview-step-line title="ชื่อ" :desc="item.firstName"/>
     <preview-step-line title="นามสกุล" :desc="item.lastName"/>
     <preview-step-line title="เลขบัตรประจำตัวประชาชน" :desc="item.personID"/>
     <preview-step-line title="สำเนาประจำตัวประชาชน" :desc="item.personIDPic"/>
-    <preview-step-line title="ความสัมพันธ์ต่อผู้ทำพินัยกรรม :" :desc="item.relation"/>
+    <preview-step-line title="ความสัมพันธ์ต่อผู้ทำพินัยกรรม" :desc="item.relation"/>
     <preview-step-line title="ส่วนแบ่ง" :desc="item.share"/>
   </div>
   <div class="row justify-content-center  border-top mt-4">
