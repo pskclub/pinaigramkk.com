@@ -69,15 +69,18 @@ function createOrder (checkout_id) {
   }, apiOptions())
 }
 
-function createForm (alias, data) {
+function createForm (alias, data, step) {
   return NewRequester.post(`/member/application-form`, {
     'alias': alias,
-    'forms': data
+    'forms': {
+      ...data,
+      step: step
+    }
   }, apiOptions())
 }
 
-function getForm (alias) {
-  return NewRequester.get(`/member/application-form?alias=${alias}`, apiOptions())
+function getForm (key, value) {
+  return NewRequester.get(`/member/application-form?key=${key}&key2=${value}`, apiOptions())
 }
 
 function makeOrder (product_id, sku_id, data, paymentData) {
@@ -111,7 +114,7 @@ function makeOrder (product_id, sku_id, data, paymentData) {
     })
     .then((res) => {
       paymentRes = res
-      return createForm(orderRes.data.order_id, data)
+      return createForm(orderRes.data.order_id, data, orderRes.data.order_id + 'register')
     })
     .then((res) => postGHL(paymentRes))
 }

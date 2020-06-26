@@ -49,32 +49,24 @@ Vue.component('preview-step', {
   },
   data: function () {
     return {
-      form: {
-        start_name: '',
-        firstName: '',
-        lastName: '',
-        personID: '',
-        address: '',
-        province: '',
-        district: '',
-        subDistrict: '',
-        zipcode: ''
-      }
+      registerStepData: {}
     }
   },
   mounted: function () {
-    // getForm(qs['id'])
+    getForm('step', qs['id'] + 'register').then((res) => {
+      this.registerStepData = res.data.forms
+    })
   },
   template: `<div>
   <preview-bar msg="ผู้สมัครทำพินัยกรรม"
                msg2="ผู้สมัครทำพินัยกรรม ต้องมีอายุไม่ต่ำกว่า 15 ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ และต้องไม่เป็นบุคคลไร้ความสามารถ"/>
-  <preview-step-line title="คำนำหน้าชื่อ" desc="dsds"/>
-  <preview-step-line title="ชื่อ" desc="dsds"/>
-  <preview-step-line title="นามสกุล" desc="dsds"/>
-  <preview-step-line title="เบอร์โทรศัพท์" desc="dsds"/>
-  <preview-step-line title="อีเมล" desc="dsds"/>
-  <preview-step-line title="เลขบัตรประจำตัวประชาชน" desc="dsds"/>
-  <preview-step-line title="ที่อยู่" desc="dsds"/>
+  <preview-step-line title="คำนำหน้าชื่อ" :desc="registerStepData.start_name"/>
+  <preview-step-line title="ชื่อ" :desc="registerStepData.firstName"/>
+  <preview-step-line title="นามสกุล" :desc="registerStepData.lastName"/>
+  <preview-step-line title="เบอร์โทรศัพท์" :desc="registerStepData.telephone"/>
+  <preview-step-line title="อีเมล" :desc="registerStepData.email"/>
+  <preview-step-line title="เลขบัตรประจำตัวประชาชน" :desc="registerStepData.personID"/>
+  <preview-step-line title="ที่อยู่" :desc="registerStepData.address"/>
   <preview-bar msg="การแต่งตั้งผู้จัดการมรดก"
                msg2="ผผู้จัดการมรดก ต้องมีอายุไม่ต่ำกว่า 20 ปีบริบูรณ์, ไม่เป็นผู้เสมือนไร้ความสามารถ, ไม่เป็นผู้ไร้ความสามารถ และต้องไม่เป็นบุคคลล้มละลาย "/>
   <div>
