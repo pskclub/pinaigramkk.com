@@ -121,7 +121,8 @@ Vue.component('detail-step-2', {
         lastName: '',
         personID: '',
         personIDPic: '',
-        relation: ''
+        relation: '',
+        share: ''
       }
     }
   },
@@ -140,7 +141,7 @@ Vue.component('detail-step-2', {
   <upload-image-input name="สำเนาบัตรประชาชน" placeholder="กรอกที่อยู่"
                       rules="" v-model="form.personIDPic"/>
   <manager-options-input name="ความสัมพันธ์ต่อผู้ทำพินัยกรรม" rules="required" v-model="form.relation"/>
-  <select-input placeholder="เลือกจำนวนสัดส่วน" :options="relationOptions" name="ส่วนแบ่ง" v-model="form.relation"/>
+  <select-input placeholder="เลือกจำนวนสัดส่วน" :options="relationOptions" name="ส่วนแบ่ง" v-model="form.share"/>
 </div>
   `
 })
@@ -167,18 +168,26 @@ Vue.component('detail-step', {
       }
     },
     deleteChild: function (index) {
-      console.log('1111', index)
       this.form = {
         ...this.form,
         children: [this.form.children.filter((item, i) => i !== index)]
       }
+    },
+    onSubmit: function () {
+      this.isShowPreview = true
 
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return
+        }
+
+      })
     }
   },
   template: `<div>
   <form-step-bar :step="3"></form-step-bar>
-  <preview-step v-if="isShowPreview" @changeStep="$emit('changeStep',$event)" @back="isShowPreview = false"/>
-  <div v-else>
+  <preview-step :detailData="form" v-if="isShowPreview" @changeStep="$emit('changeStep',$event)" @back="isShowPreview = false"/>
+  <ValidationObserver v-show="!isShowPreview" v-slot="{ invalid }" ref="form">
     <div class="mb-4  mt-5" style="padding: 10px 15px;
     background-color: rgb(248, 222, 25);
     border-radius: 50px;">
@@ -203,13 +212,14 @@ Vue.component('detail-step', {
   ผู้รับพินัยกรรม
     </span>
     </div>
-    <detail-step-2  v-model="form.children[index]" :key="index" :index="index" v-for="(child,index) in form.children" @delete="deleteChild"/>
+    <detail-step-2 v-model="form.children[index]" :key="index" :index="index" v-for="(child,index) in form.children"
+                   @delete="deleteChild"/>
     <button class="btn btn-primary" type="button" @click="addChild">เพิ่มทายาทหรือผู้รับมรดก</button>
     <div class="row justify-content-center  border-top mt-4">
       <div class="d-flex justify-content-center my-4">
-        <button class="btn btn-blue btn-block" type="button" @click="isShowPreview = true">ต่อไป</button>
+        <button class="btn btn-blue btn-block" type="button" @click="onSubmit" :disabled="false">ต่อไป</button>
       </div>
     </div>
-  </div>
+  </ValidationObserver>
 </div>`
 })
