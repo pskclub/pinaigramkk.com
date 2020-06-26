@@ -47,7 +47,7 @@ Vue.component('address-step', {
   <div class="row justify-content-center  border-top mt-4">
     <div class="d-flex justify-content-center my-4">
       <button class="btn btn-default btn-block mr-4" type="button" @click="$emit('changeStep',3)">ย้อนกลับ</button>
-      <button class="btn btn-blue btn-block" type="button" @click="$emit('changeStep',5)">ยืนยัน</button>
+      <button class="btn btn-blue btn-block" type="button" @click="$emit('submit',form)">ยืนยัน</button>
     </div>
   </div>
 </div>`

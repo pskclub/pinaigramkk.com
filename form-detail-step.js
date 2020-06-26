@@ -173,7 +173,7 @@ Vue.component('detail-step', {
         children: [this.form.children.filter((item, i) => i !== index)]
       }
     },
-    onSubmit: function () {
+    onPreview: function () {
       this.isShowPreview = true
 
       this.$refs.form.validate().then(success => {
@@ -182,11 +182,14 @@ Vue.component('detail-step', {
         }
 
       })
+    },
+    onSubmit: function () {
+      this.$emit('submit', this.form)
     }
   },
   template: `<div>
   <form-step-bar :step="3"></form-step-bar>
-  <preview-step :detailData="form" v-if="isShowPreview" @changeStep="$emit('changeStep',$event)" @back="isShowPreview = false"/>
+  <preview-step :detailData="form" v-if="isShowPreview" @submit="onSubmit" @changeStep="$emit('changeStep',$event)" @back="isShowPreview = false"/>
   <ValidationObserver v-show="!isShowPreview" v-slot="{ invalid }" ref="form">
     <div class="mb-4  mt-5" style="padding: 10px 15px;
     background-color: rgb(248, 222, 25);
@@ -217,7 +220,7 @@ Vue.component('detail-step', {
     <button class="btn btn-primary" type="button" @click="addChild">เพิ่มทายาทหรือผู้รับมรดก</button>
     <div class="row justify-content-center  border-top mt-4">
       <div class="d-flex justify-content-center my-4">
-        <button class="btn btn-blue btn-block" type="button" @click="onSubmit" :disabled="false">ต่อไป</button>
+        <button class="btn btn-blue btn-block" type="button" @click="onPreview" :disabled="false">ต่อไป</button>
       </div>
     </div>
   </ValidationObserver>

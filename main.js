@@ -316,6 +316,22 @@ Vue.component('register-section', {
       } else {
         this.setStep(2)
       }
+    },
+    detailStepSubmit (form) {
+      createForm(qs['id'], form).then(() => {
+        this.setStep(4)
+      }).catch(e => {
+        console.log(JSON.stringify(e))
+        alert(JSON.stringify(e.response.data))
+      })
+    },
+    addressStepSubmit (form) {
+      createForm(qs['id'], form).then(() => {
+        this.setStep(5)
+      }).catch(e => {
+        console.log(JSON.stringify(e))
+        alert(JSON.stringify(e.response.data))
+      })
     }
   },
   template: `<div class="container py-5" id="register">
@@ -330,8 +346,8 @@ Vue.component('register-section', {
   <div v-if="step > 0">
       <register-step :isAuth="isAuth" @reset="setStep(0)" @changeStep="setStep" @submit="registerStepSubmit" v-if="step === 1"></register-step>
       <payment-step @reset="setStep(0)" @changeStep="setStep" @submit="paymentStepSubmit" v-if="step === 2"></payment-step>
-      <detail-step @reset="setStep(0)" @changeStep="setStep" v-if="step === 3"></detail-step>
-      <address-step @reset="setStep(0)" @changeStep="setStep" v-if="step === 4"></address-step>
+      <detail-step @reset="setStep(0)" @changeStep="setStep" @submit="detailStepSubmit" v-if="step === 3"></detail-step>
+      <address-step @reset="setStep(0)" @changeStep="setStep" @submit="addressStepSubmit" v-if="step === 4"></address-step>
       <complete-step @reset="setStep(0)" @changeStep="setStep" v-if="step === 5"></complete-step>
   </div>
   <div v-else class="row equal p-5">
