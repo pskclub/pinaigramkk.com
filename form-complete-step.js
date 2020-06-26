@@ -1,21 +1,43 @@
 Vue.component('complete-step', {
+  data: function () {
+    return {
+      me: getMe()
+    }
+  },
   template: `<div>
-  <h4 class="text-center">คำขอทำพินัยกรรมเสร็จสมบูรณ์ ขอบคุณที่ไว้วางใจให้เราดูแลคุณ</h4>
+<p class="text-center"><img src="https://s3-ap-southeast-1.amazonaws.com/pam-pushandmotion/ecom/public/1dq0E2Bi6SQRNAWwipzVsTbQ5x5.png" alt=""></p>
+  <h5 class="text-center"><b>คำขอทำพินัยกรรมเสร็จสมบูรณ์ ขอบคุณที่ไว้วางใจให้เราดูแลคุณ</b></h5>
   <hr>
-  <div class="row">
-    <div class="col-md-4">เลขที่สมาชิก</div>
-    <div class="col-md-4">วันที่ทำการ</div>
-    <div class="col-md-4">ค่าใช้จ่ายทั้งหมด</div>
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <p><b>เลขที่สมาชิก</b></p>
+      <p class="text-info mt-4"><b>{{me.user_id}}</b></p>
+    </div>
+    <div class="col-md-4">
+      <b>วันที่ทำการ</b>
+      <p class="text-info mt-4"><b>{{new Date()}}</b></p>
+    </div>
+    <div class="col-md-4">
+      <b>ค่าใช้จ่ายทั้งหมด</b>
+      <p class="text-info mt-4"><b>xxxxxx</b></p>
+    </div>
 
-    <h5>ชื่อและที่อยู่ผู้รับเอกสาร</h5>
-    <p><b>นาย มงคล มีเจริญ</b></p>
-    <address>
-      13/77 หมู่ 9 ตำบลบางจาก อำเภอพระประแดง
-      สมุทรปราการ 10130
-      081-868-5930
-    </address>
-
-    <h5>* เอกสารจะจัดส่งถึงท่านภายใน 7 วันทำการ สอบถามเพิ่มเติมโทร 02-494-3898 ต่อแผนกพินัยกรรม </h5>
   </div>
+  <p class="mt-4"><b>ชื่อและที่อยู่ผู้รับเอกสาร</b></p>
+  <p class="text-info m-0"><b>นาย มงคล มีเจริญ</b></p>
+  <address class="text-info">
+    13/77 หมู่ 9 ตำบลบางจาก อำเภอพระประแดง <br>
+    สมุทรปราการ 10130 <br>
+    081-868-5930
+  </address>
+
+  <h6 class="text-center mt-5"><span style="color: red">*</span> <b>เอกสารจะจัดส่งถึงท่านภายใน 7 วันทำการ สอบถามเพิ่มเติมโทร 02-494-3898
+    ต่อแผนกพินัยกรรม </b></h6>
+  <div class="row justify-content-center  border-top mt-4 w-100">
+    <div class="d-flex justify-content-center my-4">
+      <a class="btn btn-primary" href="/">กลับสู่หน้าแรก</a>
+    </div>
+  </div>
+</div>
 </div>`
 })

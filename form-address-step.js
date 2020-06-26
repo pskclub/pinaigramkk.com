@@ -5,14 +5,13 @@ Vue.component('address-step', {
         start_name: '',
         firstName: '',
         lastName: '',
-        personID: '',
         address: '',
+        telephone: '',
         province: '',
         country: countryId,
         district: '',
         subDistrict: '',
-        zipcode: '',
-        telephone: ''
+        zipcode: ''
       }
     }
   },
@@ -26,10 +25,10 @@ Vue.component('address-step', {
 
   <div class="row justify-content-center">
     <div class="col-10">
-      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required" v-model="form.firstName"/>
+      <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="form.start_name"/>
+      <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required"
+                           v-model="form.firstName"/>
       <text-input-optional type="text" name="นามสกุล" placeholder="นามสกุล (ภาษาไทย)" rules="required"/>
-      <text-input-optional type="text" name="เลขบัตรประจำตัวประชาชน" placeholder="กรอกเลขบัตรประจำตัวประชาชน"
-                           rules="required|numeric|length:13" v-model="form.personID"/>
       <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required|numeric"
                            v-model="form.telephone"/>
       <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required|email"/>
@@ -41,8 +40,8 @@ Vue.component('address-step', {
                             rules="required" v-model="form.district"/>
       <select-address-input :parent="form.district" name="ตำบล/แขวง" placeholder="กรุณาเลือกตำบล/แขวง"
                             rules="required" v-model="form.subDistrict"/>
-      <text-input-optional type="text" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
-                           rules="required" v-model="form.zipcode"/>
+      <select-address-input :parent="form.subDistrict" name="รหัสไปรษณีย์" placeholder="กรอกรหัสไปรษณีย์"
+                            rules="required" v-model="form.zipcode"/>
     </div>
   </div>
   <div class="row justify-content-center  border-top mt-4">

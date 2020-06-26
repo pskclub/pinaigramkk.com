@@ -413,7 +413,7 @@ Vue.component('register-section', {
       </div>
     </div>
   </div>
-  <div class="text-center">
+  <div class="text-center" v-if="step === 0">
     <p class="mb-0" style="font-size: 22px;"><span class="text-danger">*</span>
       นโยบายและเงื่อนไขการยกเลิกการจัดทำร่างพินัยกรรมภายใน 7 วัน
     </p>
