@@ -114,7 +114,7 @@ function makeOrder (product_id, sku_id, data, paymentData) {
     })
     .then((res) => {
       paymentRes = res
-      return createForm(orderRes.data.order_id, data, orderRes.data.order_id + 'register')
+      return createForm(orderRes.data.order_id + 'register', data, orderRes.data.order_id + 'register')
     })
     .then((res) => postGHL(paymentRes))
 }

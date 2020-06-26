@@ -318,7 +318,7 @@ Vue.component('register-section', {
       }
     },
     detailStepSubmit (form) {
-      createForm(qs['id'], form, qs['id'] + 'detail').then(() => {
+      createForm(qs['id'] + 'detail', form, qs['id'] + 'detail').then(() => {
         this.setStep(4)
       }).catch(e => {
         console.log(JSON.stringify(e))
@@ -326,7 +326,7 @@ Vue.component('register-section', {
       })
     },
     addressStepSubmit (form) {
-      createForm(qs['id'], form, qs['id'] + 'address').then(() => {
+      createForm(qs['id'] + 'address', form, qs['id'] + 'address').then(() => {
         this.setStep(5)
       }).catch(e => {
         console.log(JSON.stringify(e))
