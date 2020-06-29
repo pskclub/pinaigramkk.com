@@ -89,7 +89,7 @@ async function execPayment (orderId, skuId, payload) {
   payload.card.number = (payload.card.number || '').replace(/-/g, '')
     .replace(/ /g, '')
   payload.card.exp = transformCardExp(payload.card.exp || '')
-  const redirectURL = `${BASE_URL}/pages/order-complete?id=${orderId}&skuId=skuId`
+  const redirectURL = `${BASE_URL}/pages/order-complete?id=${orderId}&skuId=${skuId}`
   let res
   try {
     const paymentToken = (await requestPaymentTokenAsync({

@@ -7,6 +7,17 @@ Vue.component('address-step', {
   },
   data: function () {
     return {
+      addressOptions: [
+        {
+          value: 1,
+          label: 'ใช้ที่อยู่เดียวกับบัตรประชาชน'
+        },
+        {
+          value: 2,
+          label: 'ใช้ที่อยู่อื่นในการรับเอกสาร'
+        }
+      ],
+      address_type: 1,
       form: {
         start_name: '',
         firstName: '',
@@ -29,6 +40,31 @@ Vue.component('address-step', {
         }
         this.$emit('submit', this.form)
       })
+    },
+    fillForm () {
+      getForm('step', qs['id'] + 'register').then((res) => {
+        this.form = {
+          ...this.form,
+          ...res.data.forms
+        }
+      })
+    }
+  },
+  mounted () {
+    this.fillForm()
+  },
+  watch: {
+    'address_type': {
+      immediate: true,
+      handler: function (val, old) {
+        if (val !== old) {
+          if (val === 1) {
+            this.fillForm()
+          } else {
+            this.form = {}
+          }
+        }
+      }
     }
   },
   template: `<div>
@@ -40,16 +76,20 @@ Vue.component('address-step', {
     <h5 class="mb-0">กรอกที่อยู่สำหรับจัดส่งเอกสาร</h5>
   </div>
 
-  <ValidationObserver v-slot="{ invalid }" ref="form"> 
+  <ValidationObserver v-slot="{ invalid }" ref="form">
     <div class="row justify-content-center">
       <div class="col-10">
+        <div class="mb-5">
+          <radio-input name="ที่อยู่" rules="required" :options="addressOptions" v-model="address_type"/>
+        </div>
         <start-name-input name="คำนำหน้าชื่อ" rules="required" v-model="form.start_name"/>
         <text-input-optional type="text" name="ชื่อ" placeholder="ชื่อ (ภาษาไทย)" rules="required"
                              v-model="form.firstName"/>
-        <text-input-optional type="text" name="นามสกุล" v-model="form.lastName" placeholder="นามสกุล (ภาษาไทย)" rules="required"/>
+        <text-input-optional type="text" name="นามสกุล" v-model="form.lastName" placeholder="นามสกุล (ภาษาไทย)"
+                             rules="required"/>
         <text-input-optional type="text" name="เบอร์โทรศัพท์" placeholder="กรอกเบอร์โทรศัพท์" rules="required|numeric"
                              v-model="form.telephone"/>
-        <text-input-optional type="text" name="อีเมล" placeholder="กรอกอีเมล" rules="required|email"/>
+        <text-input-optional type="text" v-model="form.email" name="อีเมล" placeholder="กรอกอีเมล" rules="required|email"/>
         <text-area-input name="ที่อยู่" placeholder="กรอกที่อยู่" desc="(ตามที่ปรากฏในบัตรประชาชน)"
                          rules="required" v-model="form.address"/>
         <select-address-input :parent="form.country" name="จังหวัด" placeholder="กรุณาเลือกจังหวัด"

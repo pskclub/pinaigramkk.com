@@ -23,7 +23,7 @@ Vue.component('complete-step', {
   <div class="row justify-content-center">
     <div class="col-md-4">
       <p><b>เลขที่สมาชิก</b></p>
-      <p class="text-info mt-4"><b>{{me.user_id}}</b></p>
+      <p class="text-info mt-4"><b>{{me.member_id}}</b></p>
     </div>
     <div class="col-md-4">
       <b>วันที่ทำการ</b>

@@ -681,6 +681,16 @@ Vue.component('main-order-complete-section', {
       state: 0
     }
   },
+  created () {
+    if (!qs['id'] || !qs['skuId']) {
+      window.location.replace('/')
+    }
+  },
+  mounted () {
+    getForm('step', qs['id'] + 'register').catch((res) => {
+      window.location.replace('/')
+    })
+  },
   template: `<div>
   <header-section/>
     <navbar-section/>

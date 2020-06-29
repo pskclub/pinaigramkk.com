@@ -1,3 +1,94 @@
+Vue.component('radio-input', {
+  props: {
+    value: {
+      default: ''
+    },
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    options: {
+      type: Array,
+      default: () => ([])
+    },
+    vid: {
+      type: String,
+      default: undefined
+    }
+  },
+  data: () => ({
+    currentValue: null
+  }),
+  created () {
+    this.currentValue = this.value
+  },
+  watch: {
+    currentValue (val) {
+      // allows us to use v-model on our input.
+      this.$emit('input', val)
+    },
+    value (val) {
+      this.currentValue = this.value
+    }
+  },
+  template: `<ValidationProvider :name="name" :rules="rules" v-slot="{ errors }">
+  <div class="row form-group">
+    <div class="col-12 d-flex align-items-center justify-content-center">
+      <radio-input-field :errors="errors" v-model="currentValue" v-bind="$props"/>
+    </div>
+  </div>
+</ValidationProvider>
+  `
+})
+
+Vue.component('radio-input-field', {
+  props: {
+    value: {
+      default: ''
+    },
+    errors: {
+      type: Array,
+      default: []
+    },
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    options: {
+      type: Array,
+      default: () => ([])
+    }
+  },
+  methods: {
+    onChange (val) {
+      this.$emit('input', val)
+    }
+  },
+  template: `     <div class="align-items-center justify-content-start d-flex">
+  <div v-for="option in options" :key="option.value" class="form-check mr-1" @click="onChange(option.value)">
+    <input class="form-check-input" :name="name" :checked="value === option.value" type="radio">
+    <label class="form-check-label">{{option.label}}</label>
+  </div>
+</div>
+  `
+})
+
 Vue.component('start-name-input-field', {
   props: {
     value: {
@@ -86,6 +177,9 @@ Vue.component('start-name-input', {
     currentValue (val) {
       // allows us to use v-model on our input.
       this.$emit('input', val)
+    },
+    value (val) {
+      this.currentValue = this.value
     }
   },
   methods: {
@@ -198,6 +292,9 @@ Vue.component('manager-options-input', {
     currentValue (val) {
       // allows us to use v-model on our input.
       this.$emit('input', val)
+    },
+    value (val) {
+      this.currentValue = this.value
     }
   },
   methods: {
@@ -252,6 +349,9 @@ Vue.component('text-input', {
     currentValue (val) {
       // allows us to use v-model on our input.
       this.$emit('input', val)
+    },
+    value (val) {
+      this.currentValue = this.value
     }
   },
   template: `<ValidationProvider :name="name" :vid="vid" :rules="rules" v-slot="{ errors }">
@@ -301,6 +401,9 @@ Vue.component('text-area-input', {
     currentValue (val) {
       // allows us to use v-model on our input.
       this.$emit('input', val)
+    },
+    value (val) {
+      this.currentValue = this.value
     }
   },
   template: `<ValidationProvider :name="name" :vid="vid" :rules="rules" v-slot="{ errors }">
@@ -363,6 +466,9 @@ Vue.component('select-input', {
     currentValue (val) {
       // allows us to use v-model on our input.
       this.$emit('input', val)
+    },
+    value (val) {
+      this.currentValue = this.value
     }
   },
   template: `<ValidationProvider :name="name" :vid="vid" :rules="rules" v-slot="{ errors }">
@@ -422,6 +528,9 @@ Vue.component('text-input-optional', {
     currentValue (val) {
       // allows us to use v-model on our input.
       this.$emit('input', val)
+    },
+    value (val) {
+      this.currentValue = this.value
     }
   },
   template: `<ValidationProvider :vid="vid || name" :name="name" :rules="rules" v-slot="{ errors }">
@@ -557,6 +666,9 @@ Vue.component('upload-image-input', {
     currentValue (val) {
       // allows us to use v-model on our input.
       this.$emit('input', val)
+    },
+    value (val) {
+      this.currentValue = this.value
     }
   },
   template: `<ValidationProvider :name="name" :rules="rules" v-slot="{ errors }">
@@ -617,6 +729,9 @@ Vue.component('select-address-input', {
         this.currentValue = ''
         this.fetch()
       }
+    },
+    value (val) {
+      this.currentValue = this.value
     }
   },
   mounted: function () {
