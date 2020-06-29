@@ -175,13 +175,12 @@ Vue.component('detail-step', {
       }
     },
     onPreview: function () {
-      this.isShowPreview = true
-
       this.$refs.form.validate().then(success => {
         if (!success) {
           return
         }
 
+        this.isShowPreview = true
       })
     },
     onSubmit: function () {
