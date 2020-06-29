@@ -31,7 +31,7 @@ Vue.component('complete-step', {
     </div>
     <div class="col-md-4">
       <b>ค่าใช้จ่ายทั้งหมด</b>
-      <p class="text-info mt-4"><b>{{product.price}}</b></p>
+      <p class="text-info mt-4"><b>{{product.price}} บาท</b></p>
     </div>
 
   </div>
