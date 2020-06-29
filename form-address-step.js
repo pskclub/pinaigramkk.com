@@ -51,6 +51,7 @@ Vue.component('address-step', {
     }
   },
   mounted () {
+    window.scrollTo(0, 0)
     this.fillForm()
   },
   watch: {

@@ -14,6 +14,9 @@ Vue.component('complete-step', {
       product: products[this.skuId]
     }
   },
+  mounted () {
+    window.scrollTo(0, 0)
+  },
   template: `<div>
   <p class="text-center"><img
     src="https://s3-ap-southeast-1.amazonaws.com/pam-pushandmotion/ecom/public/1dq0E2Bi6SQRNAWwipzVsTbQ5x5.png" alt="">

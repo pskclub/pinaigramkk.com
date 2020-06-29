@@ -149,6 +149,9 @@ Vue.component('register-step', {
       })
     }
   },
+  mounted () {
+    window.scrollTo(0, 0)
+  },
   template: `<div>
   <step-header :skuId="skuId"/>
   <hr>

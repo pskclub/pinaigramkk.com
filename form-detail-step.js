@@ -187,6 +187,9 @@ Vue.component('detail-step', {
       this.$emit('submit', this.form)
     }
   },
+  mounted () {
+    window.scrollTo(0, 0)
+  },
   template: `<div>
   <step-header :skuId="skuId"/>
   <hr>

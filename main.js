@@ -279,12 +279,22 @@ Vue.component('register-section', {
     this.step = this.fromStep
     this.isAuth = isAuth()
   },
+  computed: {
+    product: function () {
+      return products[this.skuId]
+    }
+  },
   methods: {
     onSelectProduct (productId, skuId) {
       this.productId = productId
       this.skuId = skuId
       this.$emit('next')
       this.setStep(1)
+    },
+    setProduct (productId, skuId) {
+      window.$('#conditionModal').modal('show')
+      this.productId = productId
+      this.skuId = skuId
     },
     setStep (step) {
       this.step = step
@@ -337,20 +347,25 @@ Vue.component('register-section', {
     }
   },
   template: `<div class="container py-5" id="register">
-<div v-if="step === 0">
-  <h1 class="text-info text-center">สมัครวันนี้ฟรีสัมมนา</h1>
-  <div class="text-center mt-5" style="color:#525553;">
-    <p class="mb-0" style="font-size: 24px"><b>ในวันที่ 25 กุมภาพันธ์ 2563</b></p>
-    <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
+  <div v-if="step === 0">
+    <h1 class="text-info text-center">สมัครวันนี้ฟรีสัมมนา</h1>
+    <div class="text-center mt-5" style="color:#525553;">
+      <p class="mb-0" style="font-size: 24px"><b>ในวันที่ 25 กุมภาพันธ์ 2563</b></p>
+      <p style="font-size: 24px">ที่สำนักงานใหญ่ <b>KK Group</b></p>
+    </div>
   </div>
-</div>
 
   <div v-if="step > 0">
-      <register-step :skuId="skuId" :isAuth="isAuth" @reset="setStep(0)" @changeStep="setStep" @submit="registerStepSubmit" v-if="step === 1"></register-step>
-      <payment-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="paymentStepSubmit" v-if="step === 2"></payment-step>
-      <detail-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="detailStepSubmit" v-if="step === 3"></detail-step>
-      <address-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="addressStepSubmit" v-if="step === 4"></address-step>
-      <complete-step :addressStepData="addressStepData" :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" v-if="step === 5"></complete-step>
+    <register-step :skuId="skuId" :isAuth="isAuth" @reset="setStep(0)" @changeStep="setStep"
+                   @submit="registerStepSubmit" v-if="step === 1"></register-step>
+    <payment-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="paymentStepSubmit"
+                  v-if="step === 2"></payment-step>
+    <detail-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="detailStepSubmit"
+                 v-if="step === 3"></detail-step>
+    <address-step :skuId="skuId" @reset="setStep(0)" @changeStep="setStep" @submit="addressStepSubmit"
+                  v-if="step === 4"></address-step>
+    <complete-step :addressStepData="addressStepData" :skuId="skuId" @reset="setStep(0)" @changeStep="setStep"
+                   v-if="step === 5"></complete-step>
   </div>
   <div v-else class="row equal p-5">
     <div class="col-md-4 ">
@@ -373,7 +388,9 @@ Vue.component('register-section', {
           <div class="text-center d-flex justify-content-end flex-column" style="flex:1">
             <p class="font-weight-bold" style="font-size: 45px;color: #0771FF">7,000 บาท</p>
             <div class="d-flex justify-content-center">
-              <button @click="onSelectProduct('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW')" class="btn btn-blue btn-block">สมัคร</button>
+              <button @click="setProduct('1dROVSw0zZG6QucAMQ7Sw8Wc2JR', '1dROVXqKRKAQNQ0deStt6185EpW')"
+                      class="btn btn-blue btn-block">สมัคร
+              </button>
             </div>
           </div>
         </div>
@@ -397,7 +414,9 @@ Vue.component('register-section', {
           <div class="text-center d-flex justify-content-end flex-column" style="flex:1;">
             <p class="font-weight-bold" style="font-size: 45px;color: #0771FF">20,000 บาท</p>
             <div class="d-flex justify-content-center">
-              <button @click="onSelectProduct('1dROcydNBbFYPzUy143PEKXdrPV', '1dROcrxCLiVP8P5p0uFx8g86H88')" class="btn btn-blue btn-block">สมัคร</button>
+              <button @click="setProduct('1dROcydNBbFYPzUy143PEKXdrPV', '1dROcrxCLiVP8P5p0uFx8g86H88')"
+                      class="btn btn-blue btn-block">สมัคร
+              </button>
             </div>
           </div>
         </div>
@@ -424,9 +443,118 @@ Vue.component('register-section', {
           <div class="text-center d-flex justify-content-end flex-column" style="flex:1;">
             <p class="font-weight-bold" style="font-size: 45px;color: #0771FF">40,000 บาท</p>
             <div class="d-flex justify-content-center">
-              <button @click="onSelectProduct('1dROkNXnyQxuuK7M87AXdBcOJuK', '1dROkLb71QYd49g5Fw4E9uoxDhY')" class="btn btn-blue btn-block">สมัคร</button>
+              <button @click="setProduct('1dROkNXnyQxuuK7M87AXdBcOJuK', '1dROkLb71QYd49g5Fw4E9uoxDhY')"
+                      class="btn btn-blue btn-block">สมัคร
+              </button>
             </div>
           </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal fade footer-modal" id="conditionModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="pb-3">
+          <h4 class="text-center mb-4" style="color: #0771FF;">ข้อกำหนดเงื่อนไขการรับบริการร่างพินัยกรรม</h4>
+          <div class="border-top border-bottom ">
+            <div style="white-space: pre-line;word-break: break-word;max-height: 400px;overflow-y: auto"
+                 class="my-3 px-3 ">
+              <div v-if="product">
+                1. ข้าพเจ้าขอแต่งตั้งให้ บริษัท เคเค เว็ลธ์ แมเนจเม้นท์ จำกัด (ซึ่งต่อไปในข้อกำหนดนี้เรียกว่า “บริษัท)
+                ดำเนินการจัดร่างทำพินัยกรรมให้แก่ข้าพเจ้าตลอดจนเป็นผู้จัดเก็บรักษาพินัยกรรมของข้าพเจ้ามีกำหนดระยะเวลาตามใบคำขอสมัครเพื่อรับบริการเท่านั้น
+                โดยอาศัยข้อมูลที่แจ้งให้ทราบตามใบคำขอจัดทำร่างพินัยกรรม
+                2. ข้าพเจ้าได้ชำระค่าธรรมเนียมในการจัดร่างทำพินัยกรรมตามใบคำขอสมัครเพื่อรับบริการ เป็นจำนวนเงินทั้งสิ้น
+                {{product.price}} บาท ให้กับ บริษัท โดยตรงเมื่อได้มีการยื่นใบคำขอสมัครเพื่อรับบริการแล้ว
+                3. ข้าพเจ้าตกลงว่า จะไม่ดำเนินการเรียกร้องให้บริษัทคืนค่าธรรมเนียมทั้งหมด หรือแต่เพียงบางส่วน
+                เมื่อได้มีการชำระเงินตามใบคำขอสมัครเพื่อรับบริการ ไม่ว่าจะด้วยสาเหตุใดก็ตาม ยกเว้นในกรณีที่ บริษัท
+                จะปฏิเสธคำขอของข้าพเจ้า
+                4. ข้าพเจ้าตกลงที่จะแจ้งข้อมูลต่าง ๆ ที่ต้องใช้ในการจัดทำร่างพินัยกรรมให้แก่บริษัท ภายในกำหนด 90
+                วันนับตั้งแต่วันที่ข้าพเจ้าได้ชำระเงินค่าธรรมเนียมและยื่นใบคำขอสมัครเพื่อรับบริการ
+                และหากครบกำหนดเวลาข้าพเจ้าขอสละสิทธิการรับบริการร่างพินัยกรรม หรือการบริการอื่นใด
+                ที่เกี่ยวข้องกับการพินัยกรรมที่ข้าพเจ้าได้ก่อให้เกิดขึ้นกับบริษัท
+                5. ข้าพเจ้ายินยอมให้ บริษัท เปิดเผยหรือให้ข้อมูลใดๆ ของข้าพเจ้าแก่ตัวแทน ผู้กระทำการแทน ทนายความ
+                และ/หรือคู่ค้า ที่ได้รับการแต่งตั้งโดย บริษัท เพื่ออำนวยความสะดวกในการจัดทำพินัยกรรมให้แก่ข้าพเจ้า
+                6. ข้าพเจ้าเข้าใจดีว่า บริษัท รวมถึง พนักงาน ตัวแทน ทนายความ พันธมิตรทางธุรกิจ และ/หรือ ผู้กระทำการแทน
+                มีหน้าที่ในการจัดทำร่างพินัยกรรมตามคำสั่งที่ข้าพเจ้าได้สั่งไว้เท่านั้น และรวมถึงบริการอื่น ๆ
+                ที่ข้าพเจ้าได้ยื่นใบคำขอสมัครเพื่อรับบริการ
+                และยืนยันข้อมูลที่ได้ให้ไว้เพื่อจัดร่างทำพินัยกรรมของข้าพเจ้านั้นเป็นความจริงทุกประการ
+                รวมถึงจะเป็นผู้รับผิดชอบในความเสียหายใดๆ ที่อาจเกิดขึ้นจากคำสั่งของข้าพเจ้า
+                และจะไม่ดำเนินการเรียกร้องให้รับผิดชอบในความล่าช้าใดๆ ที่อาจเกิดขึ้น
+                หรือหากข้อกำหนดในพินัยกรรมไม่สามารถดำเนินการได้ตามกฎหมายและ/หรือกระทบกระเทือนถึงสิทธิของบุคคลอื่นใด
+                โดยข้าพเจ้าเป็นผู้ให้คำสั่งไว้
+                7. ข้าพเจ้าตกลงและเข้าใจว่า มีข้อกำหนดบางส่วนในพินัยกรรมของข้าพเจ้านั้น เป็นข้อกำหนดมาตรฐานของบริษัท และ
+                ข้าพเจ้าขอยอมรับว่า ข้อความดังกล่าวนั้นเป็นไปตามความประสงค์ของข้าพเจ้า
+                8. ข้าพเจ้ายอมรับและเข้าใจว่าค่าธรรมเนียมในการบริการต่าง ๆ ของบริษัทนั้น อาจมีการเปลี่ยนแปลง ได้
+                เมื่อข้าพเจ้าได้ยื่นใบคำขอสมัครเพื่อรับบริการแล้ว
+                ข้าพเจ้าตกลงและยินยอมว่าจะไม่ดำเนินการเรียกร้องให้คืนค่าธรรมเนียมทั้งหมด หรือบางส่วน
+                เมื่อได้มีการยื่นใบคำขอสมัครเพื่อรับบริการไม่ว่าด้วยสาเหตุใดก็ตาม ยกเว้นในกรณีที่บริษัท
+                ปฏิเสธคำขอของข้าพเจ้า
+                9. บริษัท จะมีหนังสือแจ้งเตือนการต่ออายุการเก็บรักษาพินัยกรรมของข้าพเจ้า
+                ส่งไปยังสถานที่อันเป็นที่อยู่ตามที่ข้าพเจ้าได้แจ้งไว้ในเอกสารฉบับนี้
+                หรือตามสถานที่อันเป็นที่อยู่ซึ่งข้าพเจ้า ได้ทำหนังสือแจ้งเป็นลายลักษณ์อักษรถึง บริษัท 1
+                เดือนล่วงหน้าก่อนวันหมดอายุ ค่าธรรมเนียมการต่ออายุจะจ่ายให้กับ บริษัท โดยตรง บริษัท
+                จะไม่รับผิดชอบต่อการจัดเก็บรักษาพินัยกรรมของข้าพเจ้า
+                หากไม่มีการดำเนินการต่ออายุภายหลังจากครบกำหนดระยะเวลาตามใบคำขอสมัครเพื่อรับบริการ
+                10. ในกรณีที่ข้าพเจ้าไม่มารับพินัยกรรมจาก บริษัท หลังจากวันครบกำหนด บริษัท
+                สามารถเลือกใช้สิทธิต่ออายุสัญญาการเก็บรักษาพินัยกรรมต่อไป
+                หรือดำเนินการส่งพินัยกรรมของข้าพเจ้าโดยทางไปรษณีย์ตามสถานที่อันเป็นที่อยู่ที่ได้ระบุไว้ในเอกสารฉบับนี้
+                หรือตามสถานที่อันเป็นที่อยู่ซึ่งข้าพเจ้าได้ทำหนังสือแจ้งเป็นลายลักษณ์อักษรถึง บริษัท โดยบริษัท
+                จะดำเนินการคิดอัตราค่าบริการตามจริง หรือหากบริษัทเลือกที่จะใช้สิทธิส่งคืน เมื่อบริษัท
+                ได้ส่งคืนตามสถานที่อันเป็นที่อยู่แล้ว บริษัท จะพ้นจากความรับผิด และพ้นจากหน้าที่
+                หรือบทบาทผู้ดูแลรักษาพินัยกรรมทันที
+                11. ข้าพเจ้าแต่งตั้งให้ บริษัท ส่งบัตรเก็บรักษาพินัยกรรมจำนวน 3
+                ฉบับไปยังที่อยู่ของข้าพเจ้าที่แจ้งไว้ในเอกสารฉบับนี้
+                ข้าพเจ้าจะเป็นผู้รับผิดชอบในการส่งบัตรเก็บรักษาพินัยกรรม
+                และอธิบายถึงข้อกำหนดการใช้บัตรแก่บุคคลที่ข้าพเจ้ามอบอำนาจให้แต่งตั้งให้
+                และมอบหมายให้เบิกพินัยกรรมเมื่อข้าพเจ้าล่วงลับแล้ว
+                12. ตลอดชีวิตของข้าพเจ้าการเบิก
+                หรือปลดทิ้งซึ่งพินัยกรรมตามคำขอของข้าพเจ้าจะกระทำโดยข้าพเจ้าเท่านั้นและกระทำที่สำนักงานใหญ่ของบริษัท
+                ซึ่งเป็นสถานที่เก็บรักษาพินัยกรรม
+                โดยข้าพเจ้าจะต้องแสดงบัตรเก็บรักษาพินัยกรรมพร้อมทั้งบัตรประจำตัวประชาชนตัวจริงเมื่อมีการขอเบิกพินัยกรรม
+                13. เมื่อหรือหลังจากที่ข้าพเจ้าเสียชีวิตแล้ว บริษัท
+                จะพิจารณาส่งคืนพินัยกรรมแก่บุคคลที่ข้าพเจ้าได้ระบุไว้ในพินัยกรรมว่า ให้เป็นผู้รับมอบอำนาจกระทำการ
+                หรือแต่งตั้งให้เป็นผู้จัดการมรดก
+                เมื่อมีการขอเบิกพินัยกรรมบุคคลนั้นต้องแสดงบัตรเก็บรักษาพินัยกรรมพร้อมทั้งบัตรประจำตัวประชาชน
+                และใบมรณะบัตรของข้าพเจ้า ทั้งนี้ บริษัท
+                ขอสงวนสิทธิ์ในการให้ผู้เบิกพินัยกรรมได้นั้นต้องเป็นผู้ที่บริษัทพิจารณาแล้วเห็นสมควรเท่านั้น
+                14. ในกรณีที่ข้าพเจ้าให้ บริษัท เก็บรักษาพินัยกรรมฉบับใหม่ และฉบับต่อๆไป บริษัท
+                จะพิจารณาส่งคืนพินัยกรรมฉบับเก่าไปยังที่อยู่ของข้าพเจ้าที่ระบุไว้
+                หรือตามที่อยู่ที่ข้าพเจ้าได้ทำหนังสือแจ้งเป็นลายลักษณ์อักษรถึง บริษัท
+                15. ข้าพเจ้าเป็นผู้รับผิดชอบที่จะแจ้งให้ บริษัท
+                ทราบกรณีที่มีการเปลี่ยนแปลงที่อยู่รวมถึงรายละเอียดอื่นๆหากข้าพเจ้ามิได้แจ้ง เปลี่ยนแปลงที่อยู่และบริษัท
+                ส่งเอกสารใดๆ ไปยังที่อยู่เดิม ให้ถือว่าการส่งเอกสารนั้นๆ เป็นการส่งที่ชอบด้วยกฎหมายแล้ว
+                16. ข้อกำหนดและเงื่อนไขนี้ จะมีผลบังคับและผูกพัน แก่ทายาท ญาติ ผู้จัดการมรดก ผู้รับมอบอำนาจ ตัวแทน
+                ผู้รับมรดกตลอดจนบุคคลผู้เกี่ยวข้องกับพินัยกรรมฉบับนี้ของข้าพเจ้า
+                17. ความไม่ชอบด้วยกฏหมาย หรือการบังคับใช้ไม่ได้ของเงื่อนไข และข้อกำหนดไม่ว่าส่วนใดส่วนหนึ่ง
+                จะไม่ส่งผลกระทบไปถึงสัญญา เงื่อนไขหรือข้อกำหนดอื่นๆ ให้ตกเป็นโมฆะ
+                18. ข้าพเจ้าตกลงและเข้าใจว่า บริษัท ขอสงวนสิทธิ์ในการเพิ่ม ลบ
+                หรือแก้ไขส่วนหนึ่งส่วนใดของข้อกำหนดและเงื่อนไขข้างต้น โดยบริษัทจะแจ้งให้ทราบล่วงหน้า การเพิ่มเติม
+                การแก้ไข หรือลบทิ้งจะถือเป็นส่วนหนึ่งของสัญญาและจะมีผลผูกพันต่อทุกฝ่ายที่เกี่ยวข้อง
+              </div>
+            </div>
+            <div class="form-group mx-3 form-check">
+              <input readonly type="checkbox" checked class="form-check-input">
+              <label class="form-check-label">ข้าพเจ้าเข้าใจและยอมรับข้อกำหนดการรับบริการดังกล่าว</label>
+            </div>
+          </div>
+        </div>
+        <div class="text-center py-3" style="margin: 0 auto;">
+          <button @click="onSelectProduct(productId, skuId)" type="button" class="btn btn-primary border"
+                  data-dismiss="modal"
+                  style="width: 200px;">
+            ตกลง
+          </button>
+          <button type="button" class="btn btn-light border" data-dismiss="modal"
+                  style="width: 200px;background-color: white">
+            ยกเลิก
+          </button>
         </div>
       </div>
     </div>
@@ -435,7 +563,7 @@ Vue.component('register-section', {
     <p class="mb-0" style="font-size: 22px;"><span class="text-danger">*</span>
       นโยบายและเงื่อนไขการยกเลิกการจัดทำร่างพินัยกรรมภายใน 7 วัน
     </p>
-    <a class="text-info" href="" style="font-size: 22px;">อ่านรายละเอียดเพิ่มเติม</a>
+    <a class="text-info" href="#" style="font-size: 22px;">อ่านรายละเอียดเพิ่มเติม</a>
     <p class="mt-5" style="font-size: 28px">สอบถามข้อมูลเพิ่มเติมได้ที่ <img
       alt="" class="mx-2" height="15px"
       src="https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1Ybpm1JCApZJNUZMhoN6sGNehWU.jpg">
@@ -608,7 +736,7 @@ Vue.component('footer-section', {
                   </button>
                 </div>
                 <div class="pb-3">
-                  <h4 class="text-center mb-4" style="color: #0771FF;">{{modalTitle}}</h4>
+                  <h4 class="text-center mb-4" style="color: #0771FF;">ข้อกำหนดเงื่อนไขการรับบริการร่างพินัยกรรม </h4>
                   <div class="border-top border-bottom ">
                     <div style="white-space: pre-line;word-break: break-word;max-height: 400px;overflow-y: auto"
                          class="my-3 px-3 ">

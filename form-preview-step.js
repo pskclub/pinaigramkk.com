@@ -53,9 +53,11 @@ Vue.component('preview-step', {
     }
   },
   mounted: function () {
+    window.scrollTo(0, 0)
     getForm('step', qs['id'] + 'register').then((res) => {
       this.registerStepData = res.data.forms
     })
+
   },
   template: `<div>
   <preview-bar msg="ผู้สมัครทำพินัยกรรม"

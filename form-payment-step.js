@@ -26,6 +26,9 @@ Vue.component('payment-step', {
       })
     }
   },
+  mounted () {
+    window.scrollTo(0, 0)
+  },
   template: `<ValidationObserver v-slot="{ invalid }" ref="form">
  <step-header :skuId="skuId"/>
   <form-step-bar :step="2"></form-step-bar>
