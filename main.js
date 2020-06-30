@@ -545,8 +545,8 @@ Vue.component('register-section', {
             </div>
           </div>
         </div>
-        <div class="text-center py-3" style="margin: 0 auto;">
-          <button @click="onSelectProduct(productId, skuId)" type="button" class="btn btn-primary border"
+        <div class="text-center d-flex py-3" style="margin: 0 auto;">
+          <button @click="onSelectProduct(productId, skuId)" type="button" class="btn btn-primary border mr-3"
                   data-dismiss="modal"
                   style="width: 200px;">
             ตกลง
